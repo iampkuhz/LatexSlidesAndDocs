@@ -1,0 +1,7 @@
+\documentclass{article}
+\usepackage{fancyhdr}
+
+
+\begin{document}
+This is a test file.
+\end{document}

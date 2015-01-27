@@ -1,0 +1,106 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{ctex}
+\usepackage{fancyhdr}
+\usepackage{mflogo,texnames}
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{listings}
+% 插入伪代码
+\usepackage[linesnumbered,boxed]{algorithm2e}\usepackage{color}
+\definecolor{keywordcolor}{rgb}{0.8,0.1,0.5}
+\definecolor{webgreen}{rgb}{0,.5,0}
+\usepackage{geometry}
+\geometry{left=3.18cm,right=3.18cm,
+    top=2.54cm,bottom=2.54cm,
+    head=1.5cm,foot=1.75cm}
+\usepackage{multirow}
+\pagestyle{fancy}
+\lhead{学号：1401214342}
+\chead{姓名: 韩喆}
+\rhead{}
+\lfoot{Han Zhe(icst@pku)}
+\cfoot{iampkuhz@gmail.com}
+\rfoot{\thepage}
+
+% word page layout
+%\usepackage[top=2.54cm, bottom=2.54cm, left=3.18cm, right=3.18cm]{geometry}
+\title{My First \LaTeX{} article}
+\begin{document}
+\begin{center}
+\LARGE 算法课第 3次作业
+~\\
+\end{center}
+
+\begin{center}
+ \begin{tabular}{|c|c|c|c|c|}
+\hline
+      & 题目1 & 题目2 & 题目3 & 总分\\ \hline
+ \multirow{2}{*}{分数} &\multirow{2}{*}{} &\multirow{2}{*}{} &\multirow{2}{*}{} &\multirow{2}{*}{}\\
+ & & & & \\ \hline
+ \multirow{2}{*}{阅卷人} &\multirow{2}{*}{} &\multirow{2}{*}{} &\multirow{2}{*}{} &\multirow{2}{*}{}\\
+ & & & &  \\ \hline
+\end{tabular}
+\end{center}
+\vspace{20pt}
+\section{高压工作}
+  \normalsize
+  \subsection{(a)}
+
+  \paragraph{例子}
+  
+  \begin{tabular}{|c|c|c|c|}
+  \hline & 周一 & 周二 & 周三 \\
+  \hline l & 5 & 5 & 30 \\
+  \hline h & 10 & 20 & 500 \\
+  \hline
+  \end{tabular} 
+  \paragraph{} 显然应该是周一和周三选高压, 周二休息所获得的收益最高, 为510. 二按照算法思想, $20>(5+5)$, 所以周一休息, 周二高压, 进而周三只能选低压, 收益为50. 错误!
+  \subsection{动态规划求解答案} 
+  \paragraph{} 假设$H(i)$表示第i周选择高压活动时前i周一共获得的最大收益, $L(i)$表示第i周选择低压活动时前i周一共获得的最大收益. 显然前i周的最大收益为$Max\{H(i), L(i)\}$(\textbf{假设收益总是非负的, 第i周至少可以做低压活, 则第i周什么都不做显然不如做了低压活收益大}). 初始时
+  $$H(1) = h_1, L(1)=l_1$$
+  递推式为
+  $$H(i)=h_i+\max\{H(i-2), L(i-2)\}$$
+  $$L(i)=L_i+\max\{H(i-1), L(i-1)\}$$
+  当$i<=0时, H(i)=L(i)=0$,\\
+   \textbf{用大小为2n的数组BEF记录取得收益最大值时的前一个状态. 为此, 我们将所以状态对应到数字上:2n-2表示第i天选择高压状态的情况; 2n-1表示第i天选择低压状态的情况. 如果$H(i)=h_i+H(i-2)$, 则$BEF(2n-2)=2(n-2)-2$. 另外用H和L数组记录每个状态收益最大值}\\
+   等到递推结束后, 取H(n)和L(n)的最大值就是第n天的状态, 不妨设为i 然后查询BEF(i), 得到前一个状态;如果跨越一天, 则被跨越的一天为空闲. 比如, H(n)>L(n), BEF(2n-2)=2(n-2)-2, 则第i-1天空闲, i-2天选择高压工作;
+  \paragraph{复杂度分析} 需要储存每天执行高压动作和低压动作时各自当天的最大收益, 还要记录转入状态, 空间复杂度为$O(2n\times 2)=O(n)$; 循环n次计算, 每个循环内计算复杂度为$O(1)$, 更新数组复杂度为$O(1)$, 最后反向查找时的复杂度为$O(n)$, 所以总的时间复杂度为$O(n)$.\\
+  
+  
+  \section{高性能计算}
+  \subsection{实例}
+  
+  \begin{tabular}{|c|c|c|c|c|c|}
+  \hline & day1 & day2 & day3 & day4 & day5 \\
+  \hline x & 51 & 51 & 51 & 51 & 51 \\
+  \hline s & 50 & 4 & 3 & 2 & 1 \\
+  \hline
+  \end{tabular} 
+  \paragraph{最优解} 第1/3/5天工作, 第2/4天休息, 最大处理150TB数据
+  
+  \subsection{算法}两个数组A和C：A[i]表示前i天最大总收益，C[i]表示前i天取得最大收益时第i天的连续工作天数. 第一天的最大收益为$max\{x[i],s[1]\}$，前k天取得最大收益时必定只有2种情况：(1)继续前一天工作(2)前一天休息，今天最大努力工作。\textbf{因为$x[k],s[i]\geq0$，最后一天工作肯定不会比什么都不做收益低}，情况(1)的收益等于前k-1天的最大收益加上第k天的最大收益，C[k]=C[k-1]+1，情况(2)的最大收益为前k-2天的最大收益加上第k天的收益，C[k]=1。递推式为
+  $$A[n]=\cases{\max\{A[n-1]+\min\{s[C[n-1]+1],x[n]\}, A[n-2]+\min\{s[1],x[n]\}\} & if n>1 \cr
+  \max\{A[n-1]+\min\{s[C[n-1]+1],x[n]\}, \min\{s[1],x[n]\}\} & if n=2 \cr
+   \min\{s[1],x[1]\} & if n=1} $$
+  
+  \begin{displaymath}
+   C[n]=\left\{
+    \begin{array}{ll}
+      1 & \textrm{if $n=1$ or (n=2 and $A[n-1]+\min\{s[C[n-1]+1],x[n]\}>\min\{s[1],x[n]\}$)}\\
+       & \textrm{or $A[n-1]+\min\{s[C[n-1]+1],x[n]\}<A[n-2]+\min\{s[1],x[n]\}$}\\
+      C[n-1]+1 & \textrm{otherwise}
+    \end{array} \right.
+  \end{displaymath}
+  
+  \paragraph{}最后只要查看A[n]的值就是最大收益。最后的C[n]天（包括第n天）是连续工作，第n-C[n]天休息；从第n-C[n]-1天开始向前的C[n-C[n]-1]天连续工作(包含第n-C[n]-1天)...以此类推，得到全部n天的排班情况。\\
+  
+  
+  \section{期末得分}
+  \subsection{算法思路}最大的平均值等价于最大的得分和。依次求前i门课程在h小时内可以抢到的最大得分，第i+1门课的得分为给第i门课分配某一时间后的得分加上前i门课在剩余小时内得到的最大得分（递归子问题）。假设A[i,h]表示前i门课在总时间h小时下得到的最大分数和，则
+  $$A[i,h]=\cases{0 & if i=0 and h>=0 \cr
+    A[i-1,0]+f_{i+1}(0) & if $h=0$ \cr
+    \max\limits_{0\leq k\leq h}\{A[i-1,h-k]+f_{i+1}(k)\} & otherwise}$$
+   \subsection{复杂度分析}用二维数组A记录最大和，空间代价为O(nH)。按照课程数递增的顺序计算则在计算A[i,h]时，A[i-1,h-k]已经算过，计算复杂度为O(1)；计算每个A[i,h]的复杂度为O(H)；对每个i，要计算h在[0,H]的所有情况，所以复杂度为$O(H^2)$，一共计算n个课程，所以总的时间复杂度为$O(nH^2)$
+\end{document}

@@ -1,0 +1,72 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{ctex}
+\usepackage{fancyhdr}
+\usepackage{mflogo,texnames}
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{epstopdf} 
+\usepackage{listings}
+% 插入伪代码
+\usepackage[linesnumbered,boxed]{algorithm2e}
+\usepackage{color}
+\definecolor{keywordcolor}{rgb}{0.8,0.1,0.5}
+\definecolor{webgreen}{rgb}{0,.5,0}
+\usepackage{geometry}
+\geometry{left=3.18cm,right=3.18cm,
+    top=2.54cm,bottom=2.54cm,
+    head=1.5cm,foot=1.75cm}
+\usepackage{multirow}
+
+\pagestyle{fancy}
+\lhead{学号：1401214342}
+\chead{姓名: 韩喆}
+\rhead{}
+\lfoot{Han Zhe(icst@pku)}
+\cfoot{iampkuhz@gmail.com}
+\rfoot{\thepage}
+
+% word page layout
+%\usepackage[top=2.54cm, bottom=2.54cm, left=3.18cm, right=3.18cm]{geometry}
+
+\begin{document}
+\begin{center}
+\LARGE 算法课第 6次作业
+\end{center}
+
+\begin{center}
+ \begin{tabular}{|c|c|c|c|c|}
+\hline
+      & 题目1 & 题目2 & 题目3 & 总分\\ \hline
+ \multirow{2}{*}{分数} &\multirow{2}{*}{} &\multirow{2}{*}{} &\multirow{2}{*}{} &\multirow{2}{*}{}\\
+ & & & & \\ \hline
+ \multirow{2}{*}{阅卷人} &\multirow{2}{*}{} &\multirow{2}{*}{} &\multirow{2}{*}{} &\multirow{2}{*}{}\\
+ & & & &  \\ \hline
+\end{tabular}
+\end{center}
+\vspace{20pt}
+\section{最小割不变}
+  \normalsize
+  \subsection{为假} 
+  \paragraph{反例} 假设图中点集为$\{s, v_1, v_2, w, t\}$，边集为$\{(s,v_1,2),(s,v_2,2),(v_1,w,2),(v_2,w,2),(w,t,4)\}$(a,b,c)表示从a到b的边且容量为c，A为点s，B其余点以及其内部的边。则(A,B)是一个最小割，且大小为4，而提升之后的A，B割的容量为6，但是最小割为({t},其余)，容量为5，所以更新容量之后，不再是最小割。
+  \vspace{100pt}
+\section{唯前向边算法}
+  \subsection{（1）} 错误
+  \paragraph{}反例
+  点集为$\{s, v_1,...,v_{b+1}, u_1,...,u_{b+1}, t\}$，边集为
+  
+                                                     $\{(s,u_1),...,(s,u_{b+1}),(u_1,v_1),...,(u_{b+1},v_{b+1})$,
+                                                     $(v_1,t),...,(v_{b+1},t),(u_1,v_2),...,(u_b,v_{b+1})\}$
+  所有边的容量均为1
+  如果第一次找到的增广路径是$s->u_1->v_1->u_2->v_2->u_3->...->u_b-v_b->u_{b+1}->v_{b+1}->t$，则之后在唯向前边的剩余图中不存在增广路径，所以此时计算的最大流为1；但实际上最大流为b+1，为b+1条$s->u_{b+1}->v_{b+1}->t$
+  \newpage
+  \vspace{100pt}
+  \subsection{（2）} 错误
+  \paragraph{}反例
+  点集为$\{s, v_1,...,v_{b+1}, u_1,...,u_{b+1}, t\}$，边集为
+                                                     $\{(s,u_1),...,(s,u_{b+1}),(u_1,v_1),...,(u_{b+1},v_{b+1})$,
+                                                     $(v_1,t),...,(v_{b+1},t),(v_1,u_2),...,(v_1,u_{b+1})\}$
+  其中$(s,u_2),...,(s,u_{b+1}),(v_1,t)$的容量为1，$(s,u_1),(u_1,v_1)$容量为bm，其余容量为m
+  使用BFS查找到的最大流为b+1（b+1条路径$s->u_i->v_i->t$）但是实际上最大流流量大于bm（$s->u_1$充满，分成b份在$v_1$分发个$u_2,...,u_{b+1}$，再由$v_2,...,v_{b+1}$流向t）。所以此时的流量小于最大流的$\frac{b+1}{bm}$，取m=(b+1)(b+1)，为$\frac{1}{(b+1)b}<\frac{1}{b}$
+\end{document}

@@ -1,0 +1,77 @@
+\documentclass[xcolor=svgnames,dvipsnames,table, hyperref=pdftex, mathserif, presentation]{beamer}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{ctex}
+\usepackage{graphics}
+\usepackage{xcolor}
+\usepackage{wasysym}
+\usepackage{bbm}
+\usepackage{url}
+\usepackage{beamerleanprogress}
+\usepackage{tikz-dependency}
+\usepackage{tikz-qtree}
+
+\usetheme{CambridgeUS}
+%\usetheme{Pittsburgh}
+\usecolortheme{orchid} % seahorse  orchid rose
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\AtBeginSection[]{%
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+      \tableofcontents[current] 
+    \end{frame}
+  \addtocounter{framenumber}{-1}% If you don't want them to affect the slide number
+}
+\AtBeginSubsection[]
+{
+  \begin{frame}
+  \frametitle{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  %\tableofcontents[sectionstyle=show/hide,subsectionstyle=hide/show/hide]
+  \end{frame}
+  \addtocounter{framenumber}{-1}% If you don't want them to affect the slide number
+}
+\newcommand{\setof}[1]{\ensuremath{\left \{ #1 \right \}}}
+\newcommand{\tuple}[1]{\ensuremath{\left \langle #1 \right \rangle }}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\brown}[1]{\textcolor{brown}{#1}}
+\newcommand{\green}[1]{\textcolor{green}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\cyan}[1]{\textcolor{cyan}{#1}}
+
+%gets rid of navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+\begin{document}
+
+\title[EMNLP]{Typed Tensor Decomposition of Knowledge Bases For Relation Extration}
+
+\institute[icst@pku]{
+  Institute of Computer Science and Technology\\
+  Peking University 
+}
+\author[Y Feng]{ 韩喆  \\ fengyansong@pku.edu.cn}
+
+\frame[t,plain]{ \titlepage } % [t,plain]
+\frame{
+  \frametitle{ Recap: The HMM POS Tagger  }
+  
+   \begin{itemize}
+  \item We represent
+    \begin{itemize}
+    \item  a sentence of any length $n$:   $x_1, x_2, x_3, ...x_n  $ 
+    \item its corresponding POS tag sequence;  $y_1, y_2, y_3, ...y_n  $
+  \end{itemize}
+  
+ \item We care the joint probability of a sentence  and its POS tag sequence:
+  $$p(x_1, x_2, x_3, ...x_n, y_1, y_2, y_3, ...y_n)  $$
+  \red{(Generative Model)}
+  \item Then the most likely POS tag sequence for $x_1, x_2, x_3, ...x_n  $:
+   $$ \arg\max_{y_1... y_n} p(y_1, y_2, y_3, ...y_n)p( x_1, x_2, x_3, ...x_n| y_1, y_2, y_3, ...y_n)$$
+   \item Make Markov Assumptions (e.g., Trigram)
+   $$ \arg\max_{y_1... y_n}   \prod_i p(y_i| y_{i-2}, y_{i-1})\prod_i p(x_i| y_i)$$
+  	\end{itemize}
+  	
+
+}
+
+\end{document}

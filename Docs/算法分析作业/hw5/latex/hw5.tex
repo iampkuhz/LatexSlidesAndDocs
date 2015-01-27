@@ -1,0 +1,77 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{ctex}
+\usepackage{fancyhdr}
+\usepackage{mflogo,texnames}
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{listings}
+% 插入伪代码
+\usepackage[linesnumbered,boxed]{algorithm2e}
+\usepackage{color}
+\definecolor{keywordcolor}{rgb}{0.8,0.1,0.5}
+\definecolor{webgreen}{rgb}{0,.5,0}
+\usepackage{geometry}
+\geometry{left=3.18cm,right=3.18cm,
+    top=2.54cm,bottom=2.54cm,
+    head=1.5cm,foot=1.75cm}
+\usepackage{multirow}
+
+\pagestyle{fancy}
+\lhead{学号：1401214342}
+\chead{姓名: 韩喆}
+\rhead{}
+\lfoot{Han Zhe(icst@pku)}
+\cfoot{iampkuhz@gmail.com}
+\rfoot{\thepage}
+
+% word page layout
+%\usepackage[top=2.54cm, bottom=2.54cm, left=3.18cm, right=3.18cm]{geometry}
+
+\begin{document}
+\begin{center}
+\LARGE 算法课第 5次作业
+\end{center}
+
+\begin{center}
+ \begin{tabular}{|c|c|c|c|c|}
+\hline
+      & 题目1 & 题目2 & 题目3 & 总分\\ \hline
+ \multirow{2}{*}{分数} &\multirow{2}{*}{} &\multirow{2}{*}{} &\multirow{2}{*}{} &\multirow{2}{*}{}\\
+ & & & & \\ \hline
+ \multirow{2}{*}{阅卷人} &\multirow{2}{*}{} &\multirow{2}{*}{} &\multirow{2}{*}{} &\multirow{2}{*}{}\\
+ & & & &  \\ \hline
+\end{tabular}
+\end{center}
+\vspace{20pt}
+\section{字符串处理}
+  \normalsize
+  \subsection{动态规划求解答案} 
+  \paragraph{} 扩展分拆点为m+2个，增加开始节点和结束节点, L[0..(m+1)]，其中L[0]=0,L[m+1]=n。令$C[i,j] (0\leq i\leq j\leq n)i$表示从i节点开始到节点j结束这段子串的最优分拆结，$H[i,j]$表示从i到j节点的最优分拆时的第一刀的位置k, $k\in \{i+1,...,j-1\}$。由最优性，其含有最优子结构，假设[i,j]的最优子串在k处分为两段，则每一个子段也是各自切割的最优方法。
+  递推式为
+  $$C[i,j]=\cases{
+    0 & if j=i \cr
+    L[j]-L[i] if j=i+1 \cr
+    L[j]-L[i] + \min\limits_{i<k<j}\{C[i,k]+C[k,j]\} & if j>i+1
+  }  
+  $$
+  
+  $$H[i,j]=\cases{
+    i & if j=i or j=i+1 \cr
+    \arg\min\limits_{i<k<j}\{C[i,k]+C[k,j]\}  & if j>i+1
+  }
+  $$
+   问题转化为求解C[0,m+1]. 从C的长度由2开始循环，知道算到长度为m+1时。在每个循环中，计算C[i,j]时，C[i,k],C[k,j]已经求出，可以直接调用，循环比较最小切分点需要循环j-i-1次，同时可以算出H[i,j]的值。所以时间复杂度是$O(m^3)$， 空间复杂度为2个数组的存储，需要$O(m^2)$。
+  $O(1)$\\
+  
+  
+  
+ \newpage
+  
+\section{语音识别}
+  \subsection{（a）}
+  \paragraph{动态规划求解}
+  定义dp[x][y]表示从$v_0$出发，满足s路径，经过y步是否能停留在节点x。转移方程为
+  
+\end{document}
