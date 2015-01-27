@@ -1,0 +1,97 @@
+\documentclass[xcolor=svgnames,dvipsnames,table, hyperref=pdftex, mathserif, presentation]{beamer}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{ctex}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{wasysym}
+\usepackage{bbm}
+\usepackage{url}
+\usepackage{beamerleanprogress}
+\usepackage{tikz-dependency}
+\usepackage{tikz-qtree}
+
+\usetheme{CambridgeUS}
+%\usetheme{Pittsburgh}
+\usecolortheme{orchid} % seahorse  orchid rose
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\AtBeginSection[]{%
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+      \tableofcontents[current] 
+    \end{frame}
+  \addtocounter{framenumber}{-1}% If you don't want them to affect the slide number
+}
+\AtBeginSubsection[]
+{
+  \begin{frame}
+  \frametitle{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  %\tableofcontents[sectionstyle=show/hide,subsectionstyle=hide/show/hide]
+  \end{frame}
+  \addtocounter{framenumber}{-1}% If you don't want them to affect the slide number
+}
+\newcommand{\setof}[1]{\ensuremath{\left \{ #1 \right \}}}
+\newcommand{\tuple}[1]{\ensuremath{\left \langle #1 \right \rangle }}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\brown}[1]{\textcolor{brown}{#1}}
+\newcommand{\green}[1]{\textcolor{green}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\cyan}[1]{\textcolor{cyan}{#1}}
+
+%gets rid of navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+\begin{document}
+
+\title[Paraphrase]{Paraphrase Identification}
+
+\institute[icst@pku]{
+  
+}
+\author[Zhe Han]{\\ Zhe Han \\ 1401214342\\ iampkuhz@gmail.com
+}
+
+\frame[t,plain]{ \titlepage } % [t,plain]
+
+\frame{
+  \frametitle{ Outline  }
+  
+   \begin{itemize}
+  \item 方法概述
+    \begin{itemize}
+     \item definition
+     \item challenge
+    \end{itemize}
+
+  \item 算法流程
+    \begin{itemize}
+      \item 特征选择
+      \item 特征效果
+      \item 分类器说明
+    \end{itemize}
+
+  \item 分析总结
+    \begin{itemize}
+    \item 实验效果
+    \item 分析
+    \end{itemize}
+  \end{itemize}
+
+}
+
+
+\frame{
+  \frametitle{QC in/before generation part}
+  
+  \subtitle{middle}{
+  \begin{center}\Large YAGO2s: extractor\\ \end{center}
+  \begin{block}{paper}
+   (www2013)Inside YAGO2s: A Transparent Information Extraction Architecture\\
+   (btw2013)YaAGO2s: Modular High-Quality Information Extraction with an Application to Flight Planning
+  \end{block}
+
+  }                                                 
+}
+
+\end{document}

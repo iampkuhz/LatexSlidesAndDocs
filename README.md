@@ -1,1 +1,3 @@
 # LatexSlidesAndDocs
+
+纪录所有使用latex生成的ppt和文件。以后再使用latex时可以方便的快速查找

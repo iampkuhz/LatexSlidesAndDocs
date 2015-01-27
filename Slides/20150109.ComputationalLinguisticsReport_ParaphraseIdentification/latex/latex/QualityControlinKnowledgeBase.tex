@@ -1,0 +1,375 @@
+\documentclass[xcolor=svgnames,dvipsnames,table, hyperref=pdftex, mathserif, presentation]{beamer}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{ctex}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{wasysym}
+\usepackage{bbm}
+\usepackage{url}
+\usepackage{beamerleanprogress}
+\usepackage{tikz-dependency}
+\usepackage{tikz-qtree}
+
+\usetheme{CambridgeUS}
+%\usetheme{Pittsburgh}
+\usecolortheme{orchid} % seahorse  orchid rose
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\AtBeginSection[]{%
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+      \tableofcontents[current] 
+    \end{frame}
+  \addtocounter{framenumber}{-1}% If you don't want them to affect the slide number
+}
+\AtBeginSubsection[]
+{
+  \begin{frame}
+  \frametitle{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  %\tableofcontents[sectionstyle=show/hide,subsectionstyle=hide/show/hide]
+  \end{frame}
+  \addtocounter{framenumber}{-1}% If you don't want them to affect the slide number
+}
+\newcommand{\setof}[1]{\ensuremath{\left \{ #1 \right \}}}
+\newcommand{\tuple}[1]{\ensuremath{\left \langle #1 \right \rangle }}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\brown}[1]{\textcolor{brown}{#1}}
+\newcommand{\green}[1]{\textcolor{green}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\cyan}[1]{\textcolor{cyan}{#1}}
+
+%gets rid of navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+\begin{document}
+
+\title[SCKR 2014]{Quality Control for \textbf{Structured} Knowledge Base}
+
+\institute[icst@pku]{
+  
+}
+\author[Zhe Han]{\\ Zhe Han \\ 1401214342\\ iampkuhz@gmail.com
+}
+
+\frame[t,plain]{ \titlepage } % [t,plain]
+
+\frame{
+  \frametitle{ Outline  }
+  
+   \begin{itemize}
+  \item Quality control challenge in structured knowledge base
+    \begin{itemize}
+     \item definition
+     \item challenge
+    \end{itemize}
+
+  \item QC in/before generatings part
+    \begin{itemize}
+      \item YAGO2s: extractor, type checker 
+      \item YAGO3: multilingual resources
+      \item tendency: semi-structured KB, restriants, multilingual resources,
+    \end{itemize}
+
+  \item KB repair and enrichment
+    \begin{itemize}
+    \item Freebase: predict contribution quality
+    \end{itemize}
+  \item Summary
+  \end{itemize}
+
+}
+
+\frame{
+  \frametitle{structured knowledge base}
+  \begin{itemize}
+   \item Triples: <S, P, O> 
+   \begin{itemize}
+    \item form of subject-predicate-object
+   \end{itemize}
+
+   \item Schema: 
+   \begin{itemize}
+    \item predicate/relation/property set: definition(restriction)
+    \item recognition of domain and domain type...
+   \end{itemize}
+   \item Taxonomy:
+   \begin{itemize}
+    \item (domain's classses)
+    \item class hierarchy
+   \end{itemize}
+   
+  \end{itemize}
+
+}
+
+\frame{
+  \frametitle{ Challenge }
+  
+    \begin{itemize}
+      \item outdate/duplicate entries
+      \item unification of predicate, constraint of relation
+      \item inconsistent formats/data\textbf{\red{(no commercial KB available)}}
+      \item disambiguation names, entity linking
+      \item ...
+    
+    \end{itemize} 
+
+}
+
+\frame{
+  \frametitle{QC in/before generation part}
+  
+  \subtitle{middle}{
+  \begin{center}\Large YAGO2s: extractor\\ \end{center}
+  \begin{block}{paper}
+   (www2013)Inside YAGO2s: A Transparent Information Extraction Architecture\\
+   (btw2013)YaAGO2s: Modular High-Quality Information Extraction with an Application to Flight Planning
+  \end{block}
+
+  }                                                 
+}
+
+\frame{
+  \frametitle{YAGO2s: extractor}
+  \begin{itemize}
+   \item Motivation of YAGO2s:
+   \begin{itemize}
+    \item Achieving the data quality with more people joining.
+   \end{itemize}
+   
+   \item Features of YAGO2s:
+    \begin{itemize}
+     \item Modularizd IE process
+     \item Modulazied data(by theme)
+     \item parallelizd and Distributed, thus fast
+    \end{itemize}
+   \item Mothod/Architecture
+    \begin{itemize}
+     \item 39/46 extractor modules:\begin{tiny}
+                                    duplicate facts, check types, constraints...
+                                   \end{tiny}
+     \item interact extrctors for checking:
+     \begin{itemize}
+      \item Extractors to display input/output/proc/provenance of other extrctors
+      \item Modifying extractors to modify input of other extractors
+     \end{itemize}
+    \end{itemize}
+
+  
+  \end{itemize}
+
+}
+\frame{
+  \frametitle{YAGO2s: extractor}
+  \begin{itemize}
+   \item YAGO2s architexture example:\begin{tiny}
+                                       theme: a set of facts
+                                     \end{tiny}
+  \begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{yago2sArchitecture}
+  \end{figure}
+  \item Extractor
+  \begin{itemize}
+   \item input: theme(output of other extractor)/data source(Wikipedia, WordNet)
+   \item output: one or more themes
+  \end{itemize}
+
+  \end{itemize}
+
+}
+
+\frame{
+  \frametitle{QC in/before generation part}
+  
+  \subtitle{middle}{
+  \begin{center}
+  \Large {YAGO3: a KB from Multilingual Wikipedias}\\
+  \tiny{Although it is just for expanding the KB, its method can also be applyed to control quality}\\
+  \end{center}
+  \begin{block}{paper}
+   (CIDR 2015) 
+   YAGO3: A Knowledge Base from Multilingual Wikipedias
+  \end{block}
+
+  }                                                 
+}
+
+%\frame{
+%  \frametitle{KB repair and enrichment}
+%  \subtitle{middle}{
+%  \begin{center}YAGO3: a KB from Multilingual Wikipedias\end{center}
+%  }                                                 
+%}
+
+
+\frame{
+  \frametitle{YAGO3: a KB from Multilingual Wikipedias}
+  \begin{itemize}
+   \item resources and steps
+   \begin{itemize}
+    \item wikipedia-> infoboxes, classes; wikidata-> entities
+    \item fact(relation) extraction
+      \begin{itemize}
+       \item extract from infoboxes: attributes and values;
+       \item type checking: <person, bornIn, place>
+       \item function checking: <a, bornIn, p1>, <a, bornIn, p2> -> p1=p2
+       \item ...
+       \item finally map to 77-English-YAGO relations
+      \end{itemize}
+    \item cross-linguistic mapping(co-occurence)
+      \begin{itemize}
+       \item infoboxes mapping: entity/domain mapping
+       \item attribute mapping:more common, less different, frequancy...
+      \end{itemize}
+    \item taxonomy extraction
+      \begin{itemize}
+        \item category extractor
+	\item English class hierarchy by WordNet 
+	\item Multilugal class hierarchy mapped by langlink resources
+      \end{itemize}
+
+   \end{itemize}
+
+  \end{itemize}
+
+}
+
+\frame{
+  \frametitle{YAGO3: a KB from Multilingual Wikipedias}
+  \begin{itemize}
+   \item on Quality control...
+   \begin{itemize}
+    \item small KB (like Arbric) can expand more features while training
+    \item estimate possible insconsistency triples by other language data
+    \item ...
+   \end{itemize}
+
+  \end{itemize}
+
+}
+
+\frame{
+  \frametitle{YAGO3: a KB from Multilingual Wikipedias}
+  \begin{itemize}
+   \item Yaoming at en.wikipedia.org
+  \begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{yaoming}
+  \end{figure}
+   
+  \end{itemize}
+
+}
+
+\frame{
+  \frametitle{KB repair and enrichment}
+  \subtitle{middle}{
+  \begin{center}\Large freebase: predicting contribution quality for KB construction\end{center}
+  \begin{block}{paper}
+   (wsdm2014)Trust, but verify: predicting contribution quality for knowledge base construction and curation
+  \end{block}
+
+  }                                                 
+}
+
+\frame{
+  \frametitle{freebase: predicting contribution quality for KB construction}
+  \begin{itemize}
+   \item moviation
+    \begin{itemize}
+     \item verified a new contribution is correct immediately(\red{\textbf{real time}}) after being submitted
+    \end{itemize}
+  \item problem definition
+    \begin{itemize}
+     \item extract features(contributions and users)
+     \item change the problem to supervised binary classification
+    \end{itemize}
+  \item process
+    \begin{itemize}
+     \item features
+      \begin{itemize}
+       \item user contribution history: action, deletion,...
+       \item \textbf{user contribution expertise}:
+       \item triple features: frequently revised
+      \end{itemize}
+    \item contribution similarity
+      \begin{itemize}
+       \item new contribution-> find topics, taxonomy, predicate and expertise -> previous proposed good 
+      \end{itemize}
+    \item \red{(distant supervised)} training
+      \begin{itemize}
+       \item triples in training set are labeled due to their lifetime(\red{$\geq 4 weeks$}).
+      \end{itemize}
+
+    \end{itemize}
+
+  \end{itemize}
+
+}
+
+\frame{
+  \frametitle{freebase:predicting contribution quality for KB construction}
+  \begin{itemize}
+   \item experiment conclusion
+   \begin{itemize}
+    \item logistic regression is better than perceptron and gradboost
+    \item \textbf{user history features is of least importance}
+    \item expertise info is of great importance
+   \end{itemize}
+   \item future improvement?
+    \begin{itemize}
+     \item hard constraints on schema rules
+    \end{itemize}
+
+  \end{itemize}
+
+}
+
+\frame{
+  \frametitle{Summary}
+  \begin{itemize}
+   \item quality control in structured KB
+    \begin{itemize}
+      \item based on good resources
+     \item based on frequent pattern
+    \end{itemize}
+
+  \end{itemize}
+  
+    \begin{block}{candidate solutons}
+
+    \begin{itemize}
+     \item High-quality resources: \begin{footnotesize}
+                              unified hierarchy, diambiguated domain... \\ Wikipedia, WordNet, GeoNames...
+                             \end{footnotesize}
+     \item Aalingment: ontology alingment, cross-language alingment
+     \item Expert modification: \begin{footnotesize}
+                                 expertise estimation,...
+                                \end{footnotesize}
+
+     \item ?
+    \end{itemize}
+    \end{block}
+
+}
+\frame{
+  \frametitle{Appendix}
+  \begin{itemize}
+   \item attribute mapping(co-occurence):
+   \begin{itemize}
+    \item the more common subj and obj, the beter:$match(F_a,F_r)= \pi_{subj}(F_a\cap F_r)$
+    \item the more different, the worse:
+	  $clashes(T_a,F_R)=\pi_{sub}(F_a)\cap (\pi_{sub}(F_r)\setminus\pi_{subj}(F_a\cap F_r))$
+   \end{itemize}
+   
+   \item user contribution expertise
+   \begin{itemize}
+    \item 1m topics(\red{too sparse}), 5k taxonomy, 3k predicates
+   \end{itemize}
+
+  \end{itemize}
+
+}
+\end{document}
