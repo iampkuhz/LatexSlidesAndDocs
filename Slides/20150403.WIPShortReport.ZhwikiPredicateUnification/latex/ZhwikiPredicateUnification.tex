@@ -1,0 +1,144 @@
+\documentclass[xcolor=svgnames,dvipsnames,table, hyperref=pdftex, mathserif, presentation]{beamer}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{ctex}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{wasysym}
+\usepackage{bbm}
+\usepackage{url}
+\usepackage{beamerleanprogress}
+\usepackage{tikz-dependency}
+\usepackage{tikz-qtree}
+
+\usetheme{CambridgeUS}
+%\usetheme{Pittsburgh}
+\usecolortheme{orchid} % seahorse  orchid rose
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\AtBeginSection[]{%
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+      \tableofcontents[current] 
+    \end{frame}
+  \addtocounter{framenumber}{-1}% If you don't want them to affect the slide number
+}
+\AtBeginSubsection[]
+{
+  \begin{frame}
+  \frametitle{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  %\tableofcontents[sectionstyle=show/hide,subsectionstyle=hide/show/hide]
+  \end{frame}
+  \addtocounter{framenumber}{-1}% If you don't want them to affect the slide number
+}
+\newcommand{\setof}[1]{\ensuremath{\left \{ #1 \right \}}}
+\newcommand{\tuple}[1]{\ensuremath{\left \langle #1 \right \rangle }}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\brown}[1]{\textcolor{brown}{#1}}
+\newcommand{\green}[1]{\textcolor{green}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\cyan}[1]{\textcolor{cyan}{#1}}
+
+%gets rid of navigation symbols
+%\setbeamertemplate{navigation symbols}{}
+
+\begin{document}
+
+\title[中文谓词归一化]{基于中文维基百科构建的\\ 知识库的谓词归一化}
+
+\institute[icst.wip@pku]{
+  
+}
+\author[Zhe Han]{\\ 韩喆 \\ iampkuhz@gmail.com
+}
+
+\frame[t,plain]{ \titlepage } % [t,plain]
+
+\frame{
+  \frametitle{ Outline  }
+  
+   \begin{itemize}
+  \item 背景
+    \begin{itemize}
+     \item 基于维基百科的知识库
+    \end{itemize}
+
+  \item Motivation
+
+  \item 实验方法
+  
+  \item 特征选取
+
+  \item 实验效果
+    \begin{itemize}
+    \item 分析和改进
+    \end{itemize}
+  \end{itemize}
+
+}
+
+\frame{
+  \frametitle{Background}
+  基于维基百科的知识库
+  \begin{itemize}
+   \pause
+   \item definition
+      \begin{itemize}
+       \item 给定一组句子, 判断其是否是复述
+	  \begin{itemize}
+	   \item binary classification
+	  \end{itemize}
+
+      \end{itemize}
+      
+    \item Microsoft Research Paraphrase Corpus (MSRP)
+	\begin{itemize}
+	 \item train: 4,076 sentence pairs (2,753 positive: 67.5 \%)
+	 \item test: 1,725 sentence pairs (1,147 positive: 66.5 \%)
+	 \item 2个标注者, 83\%的一致性, 第三个人更正
+	\begin{block}{Sample data}
+	 \begin{itemize}
+	 	 \item Sentence 1: Amrozi accused his brother, whom he called "the witness", of deliberately distorting his evidence.
+	       \item Sentence 2: Referring to him as only "the witness", Amrozi accused his brother of deliberately distorting his evidence.
+	       \item Class: 1 (true paraphrase)
+	 \end{itemize}
+	\end{block}
+	
+	\end{itemize}
+  \end{itemize}
+
+}
+
+
+\frame{
+    \frametitle{Paraphrase identification}
+    \begin{itemize}
+     \item Common methods
+	\begin{itemize}
+	  \item lexical features
+	      \begin{itemize}
+	       \item n-gram features, skip-gram fatures, ...
+	      \end{itemize}
+
+	  \item semantic features
+	      \begin{itemize}
+	       \item POS tag, wordnet similarity, dependency tree relation, ...
+	      \end{itemize}
+
+	  \item classification
+	      \begin{itemize}
+	       \item SVM, voted classifications
+	      \end{itemize}
+	\end{itemize}
+    
+    \item Challenge
+	\begin{itemize}
+	 \item 没有提取句子的全局信息( dependency features利用不足)
+	 \item 对句子涵义的特征提取不足(没有真正理解句子)
+	\end{itemize}
+
+    \end{itemize}
+
+}
+
+\end{document}
