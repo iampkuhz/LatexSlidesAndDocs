@@ -66,21 +66,18 @@
 
   \item Motivation
 
-  \item 实验方法
+  \item 实验步骤
   
-  \item 特征选取
+  \item \textbf{特征选取及分析}.
 
-  \item 实验效果
-    \begin{itemize}
-    \item 分析和改进
-    \end{itemize}
+  \item 实验分析和改进
   \end{itemize}
 
 }
 
 \frame{
   \frametitle{Background}
-  基于维基百科的知识库
+  基于中文维基百科(网页)的知识库
 	\begin{figure}
 	 \begin{minipage}[t]{0.2\linewidth}
 	    \centering
@@ -91,25 +88,28 @@
 	      \includegraphics[width=1\linewidth]{pic/张家辉mysql.png}
 	\end{minipage}
        \end{figure}
+   \begin{itemize}
+    \item 330w 三元组, 1.6w个谓词
+   \end{itemize}
 
 }
 
 
 \frame{
     \frametitle{Motivation}
-    \begin{itemize}
+    \begin{enumerate}
      \item 知识库的谓词数量多
 	\begin{itemize}
 	  \item 1.59w， 手工排查后变成1.4w
 	\end{itemize}
     
     \item 谓词冗余
-	\begin{itemize}
-	  \item 含有“邮政”的谓词（17）：\\ INSEE/邮政编码、ISO 3166-2 邮政简写、美国邮政编号、美国邮政编码、邮政、邮政代码、邮政信箱、邮政分区、邮政区号、邮政号码、邮政简称、邮政编号、邮政编号字母、邮政编码、邮政编码FSA、邮政编码首字母、邮政缩写
-	\end{itemize}
+	\begin{block}{含有“邮政”的谓词（17）}
+	 INSEE/邮政编码、ISO 3166-2 邮政简写、美国邮政编号、美国邮政编码、邮政、邮政代码、邮政信箱、邮政分区、邮政区号、邮政号码、邮政简称、邮政编号、邮政编号字母、邮政编码、邮政编码FSA、邮政编码首字母、邮政缩写
+	\end{block}
     
     \item \red{进行谓词归一}
-    \end{itemize}
+    \end{enumerate}
 
 }
 
@@ -297,9 +297,7 @@
        \item 实验方法
 	  \begin{itemize}
 	   \item 利用中文维基百科的类别，“页面分类”下面的子类(22-2)作为类别分布的规约终点\\ 语言, 跨學科領域, 应用科学, 文学, 艺术, 宗教, 休閒, 科技, 心理学, 人物, 地理, 人文學科, 技术, 社会, 历史, \red{幫助}, 資訊, 科学, \red{總類}, 自然科学, 社会科学, 哲学, 
-	   \pause
-  
-	  \end{itemize}
+	   \end{itemize}
 
       \end{itemize}
 
@@ -331,18 +329,42 @@
 \frame{
   \frametitle{Method}
   \begin{itemize}
-   \item 主体的类别相似度
+   \item 目前效果
       \begin{itemize}
-       \item 二级类别分布还在（bu）实（ren）验（zhi）中（shi）...
-       \item 实验方法\textbf{二}。
+       \item 69.1\% correct on SVM; f1: 0.713
 	  \begin{itemize}
-	   \item freebase.NER 提供了维基百科实体的映射关系。可以通过type->People的类别判断freebase实体的类型（people，Location，organization，other）
-	   \item 重新筛选顶层类别 22->?
+	   \item 类别信息、wikitext特征虽然有，但是bug太多\\ 觉得应该做到80\%左右是可以接受的程度
 	  \end{itemize}
-
+       \item 二级类别分布特征还在（bu）实（ren）验（zhi）中（shi）...
       \end{itemize}
-   \item 其他的改进方式/特征
 
   \end{itemize}
+}
+\frame{
+  \frametitle{Method (to do)}
+  \begin{itemize}
+   \item 下一步工作
+      \begin{enumerate}
+       \item 类别信息特征bug
+       \item 频率特征重利用
+	  \begin{itemize}
+	   \item \red{待完善思路}：频率低的谓词，应当抽取其客体的语义信息
+	  \end{itemize}
+
+       \item 命名实体类别分布特征
+	  \begin{itemize}
+	   \item freebase.NER 提供了维基百科实体的映射关系\\ 通过type->People的类别判断freebase实体的类型\{people，Location，organization，other\}
+	  \end{itemize}
+
+      \end{enumerate}
+
+  \end{itemize}
+}
+
+\frame{
+  \begin{center}
+   any uestions || any suggestions ?
+  \end{center}
+
 }
 \end{document}
