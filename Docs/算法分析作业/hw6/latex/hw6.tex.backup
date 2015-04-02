@@ -1,0 +1,59 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{ctex}
+\usepackage{fancyhdr}
+\usepackage{mflogo,texnames}
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{listings}
+% 插入伪代码
+\usepackage[linesnumbered,boxed]{algorithm2e}
+\usepackage{color}
+\definecolor{keywordcolor}{rgb}{0.8,0.1,0.5}
+\definecolor{webgreen}{rgb}{0,.5,0}
+\usepackage{geometry}
+\geometry{left=3.18cm,right=3.18cm,
+    top=2.54cm,bottom=2.54cm,
+    head=1.5cm,foot=1.75cm}
+\usepackage{multirow}
+
+\pagestyle{fancy}
+\lhead{学号：1401214342}
+\chead{姓名: 韩喆}
+\rhead{}
+\lfoot{Han Zhe(icst@pku)}
+\cfoot{iampkuhz@gmail.com}
+\rfoot{\thepage}
+
+% word page layout
+%\usepackage[top=2.54cm, bottom=2.54cm, left=3.18cm, right=3.18cm]{geometry}
+
+\begin{document}
+\begin{center}
+\LARGE 算法课第 6次作业
+\end{center}
+
+\begin{center}
+ \begin{tabular}{|c|c|c|c|c|}
+\hline
+      & 题目1 & 题目2 & 题目3 & 总分\\ \hline
+ \multirow{2}{*}{分数} &\multirow{2}{*}{} &\multirow{2}{*}{} &\multirow{2}{*}{} &\multirow{2}{*}{}\\
+ & & & & \\ \hline
+ \multirow{2}{*}{阅卷人} &\multirow{2}{*}{} &\multirow{2}{*}{} &\multirow{2}{*}{} &\multirow{2}{*}{}\\
+ & & & &  \\ \hline
+\end{tabular}
+\end{center}
+\vspace{20pt}
+\section{最小割不变}
+  \normalsize
+  \subsection{为假} 
+  \paragraph{反例} 假设图中点集为$\{s, v_1, v_2, w, t\}$，边集为$\{(s,v_1,2),(s,v_2,2),(v_1,w,2),(v_2,w,2),(w,t,4)\}$(a,b,c)表示从a到b的边且容量为c，A为点s，B其余点以及其内部的边。则(A,B)是一个最小割，且大小为4，而提升之后的A，B割的容量为6，但是最小割为({t},其余)，容量为5，所以更新容量之后，不再是最小割。
+  
+  
+\section{唯前向边算法}
+  \subsection{（1）} 错误
+  \paragraph{反例}
+  点集为$\{s, v_1,...,v_{b+1}, u_1,...,u{b+1}, t\}$，边集为$\{(s,v_i),(s,v_2,2),(v_1,w,2),(v_2,w,2),(w,t,4)\}$
+  
+\end{document}
