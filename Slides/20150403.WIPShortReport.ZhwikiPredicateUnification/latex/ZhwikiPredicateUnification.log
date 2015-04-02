@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.1415926-2.5-0.9999.3 (TeX Live 2013) (format=xelatex 2014.11.29)  2 APR 2015 21:46
+This is XeTeX, Version 3.1415926-2.5-0.9999.3 (TeX Live 2013) (format=xelatex 2014.11.29)  2 APR 2015 22:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2053,6 +2053,20 @@ File: pic/张家辉wikitext.png Graphic file (type QTm)
 
 ] [12
 
+] [13
+
+] [14
+
+] [15
+
+] [16
+
+]
+File: pic/categoryHirarchy.png Graphic file (type QTm)
+ <use  "pic/categoryHirarchy.png" > [17
+
+] [18
+
 ]
 \tf@nav=\write6
 \openout6 = `ZhwikiPredicateUnification.nav'.
@@ -2063,20 +2077,21 @@ File: pic/张家辉wikitext.png Graphic file (type QTm)
 \tf@snm=\write8
 \openout8 = `ZhwikiPredicateUnification.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 280.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 280.
- (./ZhwikiPredicateUnification.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 280.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 280.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 280.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 342.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 342.
+
+(./ZhwikiPredicateUnification.aux)
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 342.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 342.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 342.
  ) 
 Here is how much of TeX's memory you used:
- 39103 strings out of 493938
- 822423 string characters out of 6148856
- 861031 words of memory out of 5000000
- 41609 multiletter control sequences out of 15000+600000
- 10764 words of font info for 78 fonts, out of 8000000 for 9000
+ 39138 strings out of 493938
+ 823524 string characters out of 6148856
+ 862127 words of memory out of 5000000
+ 41642 multiletter control sequences out of 15000+600000
+ 10772 words of font info for 79 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
  55i,17n,76p,975b,722s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on ZhwikiPredicateUnification.pdf (12 pages).
+Output written on ZhwikiPredicateUnification.pdf (18 pages).
