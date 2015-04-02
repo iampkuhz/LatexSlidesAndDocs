@@ -249,7 +249,7 @@
 	   \item [出生]：\{(birth place,11470),(birth date,7598),(出生地点,7241),(出生日期,6789),(date of birth,3775),(place of birth,3690),(term start,2346),(出生地,2076),(term end,1511),(birthplace,1156)...\}
 	  \end{itemize}
 
-       \item 实验效果
+
       \end{itemize}
 
    
@@ -261,7 +261,19 @@
   \frametitle{Method}
   \begin{itemize}
     \item \red{wikitext相似度}:期望的重点
-	\item 
+	\begin{itemize}
+	  \item 实验效果
+	    \begin{itemize}
+	      \item SVM分类失败（全部预测为1）
+	    \end{itemize}
+	 \item 失败原因
+	    \begin{itemize}
+	     \item 80\%的测试数据的相似值为0。很多时候有一个谓词没有对应的wikitext，尤其是出现频率少的谓词
+	    \end{itemize}
+
+	\end{itemize}
+
+	  
   \end{itemize}
 
 }
