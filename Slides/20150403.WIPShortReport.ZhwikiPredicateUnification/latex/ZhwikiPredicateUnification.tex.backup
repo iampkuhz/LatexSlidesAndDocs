@@ -249,19 +249,9 @@
 	   \item [出生]：\{(birth place,11470),(birth date,7598),(出生地点,7241),(出生日期,6789),(date of birth,3775),(place of birth,3690),(term start,2346),(出生地,2076),(term end,1511),(birthplace,1156)...\}
 	  \end{itemize}
 
-       \item 实验效果
       \end{itemize}
 
    
-  \end{itemize}
-
-}
-
-\frame{
-  \frametitle{Method}
-  \begin{itemize}
-    \item \red{wikitext相似度}:期望的重点
-	\item 
   \end{itemize}
 
 }
