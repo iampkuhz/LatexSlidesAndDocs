@@ -1,6 +1,7 @@
 \documentclass[xcolor=svgnames,dvipsnames,table, hyperref=pdftex, mathserif, presentation]{beamer}
 \usepackage{amsmath,amssymb,amsfonts,amsthm}
 \usepackage{ctex}
+\setCJKsansfont{KaiTi}% 文泉驿的黑体
 \usepackage{graphics}
 \usepackage{graphicx}
 \usepackage{xcolor}
@@ -126,7 +127,7 @@
 	\begin{block}{含有“邮政”的谓词（17）}
 	 INSEE/邮政编码、ISO 3166-2 邮政简写、美国邮政编号、美国邮政编码、邮政、邮政代码、邮政信箱、邮政分区、邮政区号、邮政号码、邮政简称、邮政编号、邮政编号字母、邮政编码、邮政编码FSA、邮政编码首字母、邮政缩写
 	\end{block}
-    \item 延生查询/知识库合并
+    \item 延伸查询/知识库合并
 	\begin{itemize}
 	 \item 推荐相似的谓词给查询者
 	 \item 将不同知识库合并时提供谓词归一的规则
@@ -182,7 +183,7 @@
 	    \end{itemize}
 	 \item 测试集1000个单词对，训练集500个单词对
 	    \begin{itemize}
-	     \item 全部分类为true: 52.9\% correct
+	     \item 全部分类为false: 52.7\% correct
 	    \end{itemize}
 
 	\end{itemize}
@@ -242,8 +243,8 @@
   \begin{itemize}
    \item 文本相似度
       \begin{enumerate}
-       \item 相同单词个数/总长度 （2维）
-       \item $min($编辑距离/总长度$,1)$ （2维）
+       \item 相同单词个数/谓词长度 （2维）
+       \item $min($编辑距离/谓词长度$,1)$ （2维）
        \item 61.8\% correct on SVM
       \end{enumerate}
       
@@ -422,7 +423,7 @@
        \item 二级类别分布特征还在（bu）改（ren）进（zhi）中（shi）...
       \end{itemize}
    
-       \item 当时抽特征的时候,没有及时仔细检查,能跑出结果就行...
+       \item 之前抽特征的时候,没有及时仔细检查,能跑出结果就行...
   \end{itemize}
 }
 
@@ -436,6 +437,7 @@
   \end{block}
 
 }
+
 \frame{
   \frametitle{Method (to do)}
   \begin{itemize}
@@ -444,7 +446,7 @@
        \item 类别信息特征bug
        \item 规约类别修正
 	  \begin{itemize}
-	   \item \green{科学}是\green{自然科学}的父类，但都是规约重点
+	   \item \green{科学}是\green{自然科学}的父类，但都是规约终点
 	   \item 类别分布向量直接加入特征向量\\ 原来是做的余弦相似度的值
 	  \end{itemize}
        
@@ -464,10 +466,29 @@
   \end{itemize}
 }
 
+
+\frame{
+  \frametitle{Method (to do)}
+  \begin{itemize}
+   \item 下一步工作
+      \begin{enumerate}\setcounter{enumi}{5}
+       \item 上级类别信息
+	  \begin{itemize}
+	   \item \blue{罗马拼音} <=> 男演员
+	  \end{itemize}
+      \end{enumerate}
+  \begin{figure}[h]
+  \centering
+  \includegraphics[width=0.25\textwidth]{pic/张家辉info.png}
+  \end{figure}
+
+  \end{itemize}
+}
 \frame{
   \begin{center}
-   any uestions || any suggestions ?
+   questions || suggestions ?
   \end{center}
 
 }
 \end{document}
+
