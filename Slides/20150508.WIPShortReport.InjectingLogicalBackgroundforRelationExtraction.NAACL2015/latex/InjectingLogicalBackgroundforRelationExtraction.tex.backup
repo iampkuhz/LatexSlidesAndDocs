@@ -15,6 +15,11 @@
 \usepackage{fancyvrb}
 \usepackage{mathrsfs}
 \usepackage{alltt}
+% for uml charts
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta, graphs, trees, shapes, positioning, automata,
+shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersections, decorations.text}
+\usepackage{tikz-uml}
 
 \usetheme{CambridgeUS}
 %\usetheme{Pittsburgh}
@@ -49,10 +54,10 @@
 
 \begin{document}
 
-\title[MF+FOL]{Injecting Logical Background for Relation Extraction}
+\title[MF+FOL]{Injecting Logical Background for Relation Extraction \[NAACL2015\]}
 
-\institute[icst.wip@pku]{
-  
+\institute[UCL]{
+  University College London
 }
 \author[Tim Rockt]{
   Tim Rockt aschel (UCL)\\
@@ -86,12 +91,16 @@
 \frame{
   \frametitle{ summary }
   \centering\includegraphics[width=0.9\hsize]{file/overview.png}
-  
-  
+  \begin{columns}[c]
+   \column{.2\hsize}
+   \column{.6\hsize}
+  \begin{block}{}
+    \centering
   原始矩阵 $|\mathcal{P}|\times|\mathcal{R}|$ \\
+  
 \resizebox{6cm}{!}{
-\begin{tabular}{l|l|l|r|l|l|l|l|l|l|}
-\multicolumn{1}{c}{} & \multicolumn{1}{c}{fr1}  & \multicolumn{1}{c}{fr2}  & \multicolumn{1}{c}{fr3}  & \multicolumn{1}{c}{p1}  & \multicolumn{1}{c}{p2}  & \multicolumn{1}{c}{p3}  & \multicolumn{1}{c}{p4}  & \multicolumn{1}{c}{p5}  & \multicolumn{1}{c}{p6} \tabularnewline \hhline{~|*{9}{-}}
+\begin{tabular}{l|l|l|l|l|l|l|l|l|l|}
+\multicolumn{1}{c}{ } & \multicolumn{1}{c}{fr1}  & \multicolumn{1}{c}{fr2}  & \multicolumn{1}{c}{fr3}  & \multicolumn{1}{c}{p1}  & \multicolumn{1}{c}{p2}  & \multicolumn{1}{c}{p3}  & \multicolumn{1}{c}{p4}  & \multicolumn{1}{c}{p5}  & \multicolumn{1}{c}{p6} \tabularnewline \hhline{~|*{9}{-}}
 \rowcolor[HTML]{C0C0C0} 
 (e1,e2)  & \cellcolor[HTML]{EFEFEF}1 & \cellcolor[HTML]{EFEFEF}0 & \cellcolor[HTML]{EFEFEF}0                      & 0  & 1  & 0  & 0  & 1  & 0  \tabularnewline \hhline{~|*{9}{-}}
 \rowcolor[HTML]{C0C0C0} 
@@ -105,6 +114,11 @@
 (e3,e7)  & \cellcolor[HTML]{FFCCC9}0 & \cellcolor[HTML]{FFCCC9}1 & \cellcolor[HTML]{FFCCC9}0 & 1  & 0  & 0  & 1  & 0  & 0  \tabularnewline \hhline{~|*{9}{-}}
 \end{tabular}
 }
+  \end{block}
+   \column{.2\hsize}
+  \end{columns}
+
+
 
 }
 
@@ -135,7 +149,7 @@
 }
 
 \frame{
-  \frametitle{ Notation}
+  \frametitle{ Notation }
   $\mathcal{P}\subseteq\varepsilon\times\varepsilon$ :实体对$(e_i,e_j)$集合 \\
   $\mathcal{R}$ :关系$fr_i,p_j$集合 \\
   $V$：向量空间$\{v_{fr_1}=\mathbf{v_{r_m}},v_{fr_2},...,v_{p_1}=\mathbf{v_{(e_i,e_j)}},v_{p_2},...\}$ \\
@@ -147,8 +161,11 @@
 	\item 复合问题（logical background knowledge）：$professorAt(x,y)\Rightarrow emplyeeAt(x,y)$
       \end{itemize}
   \end{itemize}
-   评价一阶谓词子集$\mathbf{w}$的好坏 $$p(\mathbf{w}|{V})=\prod_{r_m(e_i,e_j)\in w}\pi_{m}^{e_i,e_j}\prod_{r_m(e_i,e_j)\notin w}(1-\pi_{m}^{e_i,e_j})$$
-  
+   评价一阶谓词子集$\mathbf{w}$的好坏 
+   \begin{block}{}
+    $$p(\mathbf{w}|{V})=\prod_{r_m(e_i,e_j)\in w}\pi_{m}^{e_i,e_j}\prod_{r_m(e_i,e_j)\notin w}(1-\pi_{m}^{e_i,e_j})$$
+   \end{block}
+
 }
 
 \frame{
@@ -165,7 +182,7 @@
 	  \begin{itemize}
 	  \item 先用FOL改变原始矩阵 $M_{|\mathcal{P}|\times|\mathcal{R}|}$ ，再进行普通矩阵分解
 	  \end{itemize}
-       \item 一阶谓词子集加入目标函数（Joint Optimization）
+       \item 将抽取的规则（一阶谓词子集）加入目标函数（Joint Optimization）
        \item 传统矩阵分解生成向量空间$V$，然后使用收集的逻辑规则预测（Post-Factorization Inference）
       \end{enumerate}
 
@@ -186,36 +203,66 @@
   
 }
 
+
+\frame{
+  \begin{columns}[c]
+   \column{.2\hsize}
+   \column{.6\hsize}
+   \begin{block}{}
+    \centering \Large Pre-Factorization Inference\\ (FOL作为预处理)
+   \end{block}
+
+   \column{.2\hsize}
+  \end{columns}
+
+}
+
 \frame{
   \frametitle{Pre-Factorization Inference(FOL作为预处理)}
-  核心：弥补矩阵的稀疏性，增加收集的\emph{一阶逻辑规则}与freebase relation之间的关联 \\
+  核心：弥补矩阵的稀疏性，增加收集的\emph{一阶逻辑规则$\mathfrak{F}$}与freebase relation之间的关联 \\
   方法：根据逻辑规则，增加原始矩阵 $M_{|\mathcal{P}|\times|\mathcal{R}|}$中值为1的元素个数
-  \begin{block}{步骤}
-   \begin{itemize}
+  \begin{block}{steps}
+   \begin{enumerate}
     \item 收集一阶谓词规则
     \item 对每一条规则，比如$\mathbf{F}=\forall x,y:r_s(x,y) \Rightarrow (x,y)$
 	\begin{itemize}
 	 \item 如果$[(x,y),r_s]$上的值为1，则把$[(x,y),r_t]$上的值置为1
 	 \item 递归做下去，知道没有新的1出现
 	\end{itemize}
-    \item 对更新后的矩阵$M_{|\mathcal{P}|\times|\mathcal{R}|}'$进行矩阵分解
-   \end{itemize}
+    \item 对更新后的矩阵$M_{|\mathcal{P}|\times|\mathcal{R}|}'$进行传统矩阵分解
+   \end{enumerate}
 
   \end{block}
+
+}
+
+
+\frame{
+  \begin{columns}[c]
+   \column{.2\hsize}
+   \column{.6\hsize}
+   \begin{block}{}
+    \centering \Large Joint Optimization(组合模型)
+   \end{block}
+
+   \column{.2\hsize}
+  \end{columns}
 
 }
 
 \frame{
   \frametitle{Joint Optimization(组合模型)}
-  核心：把收集的\emph{一阶逻辑规则}加入到矩阵分解的目标函数中\\
+  核心：把收集的\emph{一阶逻辑规则$\mathfrak{F}$}加入到矩阵分解的目标函数中，训练出更好的属性向量$v_{r_m}$、实体对向量$v_{(e_i,e_j)}$\\
   训练集的目标函数：$$\displaystyle\min_V \sum_{\mathcal{F}\in\mathfrak{F}}\mathcal{L}([\mathcal{F}])$$
   \begin{block}{}
   \small $[\mathcal{F}]$ is the marginal probability $p(w|V)$ that the formula F is true under the model
   \end{block}
-  $\mathcal{L}([\mathcal{F}]:=-\log([\mathcal{F}])$\\
+  $\mathcal{L}([\mathcal{F}]）:=-\log([\mathcal{F}])$\\
+  $V$：向量空间$\{v_{fr_1}=\mathbf{v_{r_m}},v_{fr_2},...,v_{p_1}=\mathbf{v_{(e_i,e_j)}},v_{p_2},...\}$ \\
   $p(\mathbf{w}|{V})=\prod_{r_m(e_i,e_j)\in w}\pi_{m}^{e_i,e_j}\prod_{r_m(e_i,e_j)\notin w}(1-\pi_{m}^{e_i,e_j})$
   
 }
+
 
 \frame{
   \frametitle{边缘分布(marginal probability)}
@@ -235,6 +282,7 @@
   \begin{block}{}
    $p(\mathbf{w}|{V})=\prod_{r_m(e_i,e_j)\in w}\pi_{m}^{e_i,e_j}\prod_{r_m(e_i,e_j)\notin w}(1-\pi_{m}^{e_i,e_j})$\\
   $p(\mathbf{w}|{V})=\prod f_{r_m(e_i,e_j)}=f_{r_m(e_i,e_j)}\times f_{r_n(e_k,e_l)}\times ...$\\
+  \end{block}
    \begin{tiny}
    \begin{equation}
     f_{r_m(e_i,e_j)}=
@@ -244,26 +292,29 @@
    \end{cases}
   \end{equation}
   \end{tiny}
-  \end{block}
  
  \begin{itemize}
   \item 当$\mathcal{F}$是原子命题时 $[\mathcal{F}]=\pi_{m}^{e_i,e_j}$\\
-  \item 当$\mathcal{F}=\mathcal{A}\wedge\mathcal{B}$, $\mathcal{A}$和$\mathcal{B}$是原子命题时, $[\mathcal{F}]=\pi_{m}^{e_i,e_j}\times\pi_{m}^{e_i,e_j}=[\mathcal{A}][\mathcal{B}]$\\
-  \item 当$\mathcal{F}=\mathcal{A}\wedge\mathcal{B}$
+  \item 当$\mathcal{F}=\mathcal{A}\wedge\mathcal{B}$, $\mathcal{A}$和$\mathcal{B}$是原子命题时, $[\mathcal{F}]=\pi_{m}^{e_i,e_j}\times\pi_{n}^{e_k,e_l}=[\mathcal{A}][\mathcal{B}]$\\
+  \item 当$\mathcal{F}=\neg\mathcal{A}$，$\mathcal{A}$是原子命题时，$[\mathcal{F}]=1-[\mathcal{A}]$
  \end{itemize}
 
+  \begin{block}{$\forall[\mathcal{F}]$}
+  $\mathcal{F}=\mathcal{A}\vee\mathcal{B}=1-(\neg\mathcal{A})\wedge(\neg\mathcal{B})$\\
+  $[\mathcal{A}\vee\mathcal{B}]=[\mathcal{A}]+[\mathcal{B}]-[\mathcal{A}][\mathcal{B}]$\\
+  $[\mathcal{A}\Rightarrow\mathcal{B}]=[\mathcal{A}]([\mathcal{B}]-1)+1$...\\
   
-  
-  
+  \end{block}
 
-  
 }
+
 \frame{
   \frametitle{Joint Optimization(组合模型)}
   目标函数：$$\displaystyle\min_V \sum_{\mathcal{F}\in\mathfrak{F}}\mathcal{L}([\mathcal{F}])$$
   使用随机梯度下降（stochastic gradient descent）求解
   \begin{block}{}
    \begin{itemize}
+    \item $\mathcal{L}([\mathcal{F}]）:=-\log([\mathcal{F}])$
     \item 对任意一个$\mathcal{F}$,其只和实体对向量、谓词向量有关
     \item 对任意$\mathcal{L}([\mathcal{F}])$只要求$\partial \mathcal{L}([\mathcal{F}])/\partial v_{r_m}$和$\partial\mathcal{L}([\mathcal{F}])/\partial v_{(e_i,e_j)}$
    \end{itemize}
@@ -272,19 +323,164 @@
 
 }
 
-
-
+\frame{
+  \frametitle{Joint Optimization(组合模型)}
+  $\pi_{m}^{e_i,e_j}=\sigma(\mathbf{v_{r_m}},\mathbf{v_{(e_i,e_j)}})$ \\
+  $\mathcal{L}([\mathcal{F}]）:=-\log([\mathcal{F}])$
+  \begin{columns}[c]
+   \column{.55\hsize}
+    \begin{block}{$\mathcal{F}= \pi_{m}^{e_i,e_j}$ is a ground atom}
+   $\partial [\mathcal{F}]/\partial v_{r_m}=[\mathcal{F}](1-[\mathcal{F}])v_{(e_i,e_j)}$ \\
+   $\partial [\mathcal{F}]/\partial v_{(e_i,e_j)}=[\mathcal{F}](1-[\mathcal{F}])v_{r_m}$ \\
+   $\partial \mathcal{L}([\mathcal{F}])/\partial v_{r_m}=-[\mathcal{F}]^{-1}\partial [\mathcal{F}]/\partial v_{r_m}$ \\
+   $\partial \mathcal{L}([\mathcal{F}])/\partial v_{(e_i,e_j)}=-[\mathcal{F}]^{-1}\partial [\mathcal{F}]/\partial v_{(e_i,e_j)}$
+  \end{block}
+  
+  \column{.4\hsize}
+   \begin{block}{$\mathcal{F}$ is a First-order Logic}
+   e.g. $\mathcal{F}= \forall x,y:r_s(x,y) \Rightarrow t(x,y)$ \\
+   $[\mathcal{F}]=\displaystyle\prod_{(e_i,e_j)\in\mathcal{P}}[\mathcal{F}_{ij}]$ \\
+   $\mathcal{L}([\mathcal{F}])=\sum_{(e_i,e_j)\in\mathcal{P}}\mathcal{L}([\mathcal{F}_{ij}])$
+  \end{block}
+  \end{columns}
+  
+  \vspace{5mm}
+  目标函数：$$\displaystyle\min_V \sum_{\mathcal{F}\in\mathfrak{F}}\mathcal{L}([\mathcal{F}])$$
+}
 
 \frame{
-  \frametitle{ }
+  \frametitle{Formulae Extraction and Annotation(一阶逻辑规则$\mathfrak{F}$抽取)}
   
-\begin{tabular}{c|c|c|c|cc|}
-    \multicolumn{1}{c}{} & \multicolumn{1}{c}{A} & \multicolumn{1}{c}{B} & \multicolumn{1}{c}{C} &           D           & \multicolumn{1}{c}{E} \tabularnewline \hhline{~|*{5}{-}}
-             a           &  \cellcolor{blue!25}  & \multicolumn{1}{c}{}  & \multicolumn{1}{c}{}  &                       &  \cellcolor{red!25}   \tabularnewline \cline{2-3}
-             b           &   \cellcolor{green!25}                    &            \cellcolor{green!25}           & \multicolumn{1}{c}{}  &                       &  \tabularnewline \cline{2-4}
-             c           &  \cellcolor{green!25}                     &            \cellcolor{green!25}           &          \cellcolor{green!25}             &                       &  \tabularnewline \cline{2-5}
-             d           &   \cellcolor{green!25}                    &            \cellcolor{green!25}           &         \cellcolor{green!25}              & \multicolumn{1}{c|}{} &  \tabularnewline \hhline{~|*5-}
-             e           &    \cellcolor{green!25}                   & \cellcolor{green!25}  &                  \cellcolor{green!25}     & \multicolumn{1}{c|}{} &  \tabularnewline \hhline{~|*5-}
+  \begin{enumerate}
+   \item 由分解原始矩阵 $M_{|\mathcal{P}|\times|\mathcal{R}|}$ 得到实体对向量、关系向量
+   \item 对所有关系对：$(r_s,r_t), r_t\in freebase$
+      \begin{enumerate}
+       \item 对训练集中的所有实体对$(e_i,e_j)$,计算$[r_s(e_i,e_j) \Rightarrow r_t(e_i,e_j)]$
+      \end{enumerate}
+   \item 取值最高的100个作为抽取的一阶逻辑规则集合$\mathfrak{F}$
+      \begin{itemize}
+       \item 其中前36个比较好
+      \end{itemize}
+
+  \end{enumerate}
+  
+  \begin{block}{Formula}
+   \begin{small}
+    0.97 $\forall x,y: \#2-unit-of-\#1(x, y) \Rightarrow org/parent/child(x, y)$\\
+    0.97 $\forall x,y: \#2-city-of-\#1(x, y) \Rightarrow location/containedby(x, y)$\\
+    0.97 $\forall x,y: \#2-minister-\#1(x, y) \Rightarrow person/nationality(x, y)$\\
+    0.96 $\forall x,y: \#2-minister-\#1(x, y) \Rightarrow person/nationality(x, y)$
+   \end{small}
+  \end{block}
+
+}
+
+\frame{
+  \begin{columns}[c]
+   \column{.25\hsize}
+   \column{.5\hsize}
+   \begin{block}{}
+    \centering \Large Experiment
+   \end{block}
+
+   \column{.25\hsize}
+  \end{columns}
+
+}
+
+\frame{
+  \frametitle{Experiment}
+  \begin{columns}[c]
+   
+\column{.5\hsize}
+\begin{small}
+ 
+  \begin{block}{1. Zero-shot Relation Learning}
+   \begin{itemize}
+    \item 舍去所有freebase relation信息,\emph{训练数据中freebase relation的列都置为0}(模拟新关系的发现)
+   \end{itemize}
+
+  \end{block}
+
+  \begin{block}{2. Relations with Few Distant Labels}
+      \begin{itemize}
+        \item 给出部分freebase relation信息. 给出率为0时退化为实验1
+      \end{itemize}
+
+  \end{block}
+
+  \begin{block}{3. Comparison on Complete Data}
+      \begin{itemize}
+       \item 给出全部freebase relation信息. 等价于实验2中给出率为100\%
+      \end{itemize}
+
+  \end{block}
+\end{small}
+
+  
+\column{.47\hsize}
+
+  原始矩阵 $|\mathcal{P}|\times|\mathcal{R}|$ \\
+\resizebox{6cm}{!}{
+\begin{tabular}{l|l|l|l|l|l|l|l|}
+\multicolumn{1}{c}{} & \multicolumn{1}{c}{fr1}  & \multicolumn{1}{c}{fr2}  & \multicolumn{1}{c}{fr3}  & \multicolumn{1}{c}{p1}  & \multicolumn{1}{c}{p2}  \tabularnewline \hhline{~|*{5}{-}}
+\rowcolor[HTML]{C0C0C0} 
+(e1,e2)  & \cellcolor[HTML]{EFEFEF}1 & \cellcolor[HTML]{EFEFEF}0 & \cellcolor[HTML]{EFEFEF}0                      & 0  & 1  \tabularnewline \hhline{~|*{5}{-}}
+\rowcolor[HTML]{C0C0C0} 
+(e2,e3)  & \cellcolor[HTML]{EFEFEF}0 & \cellcolor[HTML]{EFEFEF}1 & \cellcolor[HTML]{EFEFEF}0                      & 1  & 0   \tabularnewline \hhline{~|*{5}{-}}
+\rowcolor[HTML]{C0C0C0} 
+(e1,e3)  & \cellcolor[HTML]{EFEFEF}0 & \cellcolor[HTML]{EFEFEF}0 & \cellcolor[HTML]{EFEFEF}1                      & 0  & 0   \tabularnewline \hhline{~|*{5}{-}}
+\rowcolor[HTML]{C0C0C0} 
+(e1,e10) & \cellcolor[HTML]{EFEFEF}1 & \cellcolor[HTML]{EFEFEF}0 & \cellcolor[HTML]{EFEFEF}0                      & 1  & 0   \tabularnewline \hhline{~|*{5}{-}}
+(e1,e6)  & \cellcolor[HTML]{FFCCC9}1 & \cellcolor[HTML]{FFCCC9}1 & \cellcolor[HTML]{FFCCC9}0                      & 1  & 0   \tabularnewline \hhline{~|*{5}{-}}
+(e1,e8)  & \cellcolor[HTML]{FFCCC9}1 & \cellcolor[HTML]{FFCCC9}0 & \cellcolor[HTML]{FFCCC9}0                      & 1  & 0   \tabularnewline \hhline{~|*{5}{-}} 
+(e3,e7)  & \cellcolor[HTML]{FFCCC9}0 & \cellcolor[HTML]{FFCCC9}1 & \cellcolor[HTML]{FFCCC9}0 & 1  & 0   \tabularnewline \hhline{~|*{5}{-}}
 \end{tabular}
 }
+
+  \end{columns}
+
+
+}
+
+\frame{
+  \frametitle{Experiemnt}
+  \begin{columns}[c]
+   \column{.57\hsize}
+   \noindent\scalebox{0.9}{
+\begin{tikzpicture}
+\tikzstyle{Node}=[draw, rectangle, rounded corners, align=center]
+\node [Node, text width=3cm] (rule) {由训练集(\textbf{原始的矩阵})提取\emph{规则集合$\mathfrak{F}$}} ;
+\node [Node, text width=2.5cm, right=of rule] (objective) {目标函数$\displaystyle\min_V \sum_{\mathcal{F}\in\mathfrak{F}}\mathcal{L}([\mathcal{F}])$} ;
+\node [Node, text width=2.8cm, below=of rule] (MF) {利用\textbf{过滤后的矩阵},分解得到初始实体对向量$v_{(e_i,e_j)}$，关系向量$v_{r_m}$} ;
+\node [Node, text width=2.5cm, right=of MF, xshift=1cm] (SGD) {随机梯度下降解得实体对向量$v_{(e_i,e_j)}$，关系向量$v_{r_m}$} ;
+
+\path[-Stealth, blue, thick] 
+  (rule) edge [bend left=10] (objective) 
+  (rule.south) edge [bend left=30] (MF.north) 
+  (MF.east) edge [bend left=10] (SGD.west)
+  (objective.south) edge [bend left=30] (SGD.north) 
+ ;
+\end{tikzpicture}
+}
+
+  \column{.4\hsize}
+  \begin{itemize}
+   \item 不同实验共享相同规则集$\mathfrak{F}$
+   \item 不同实验“过滤后的矩阵”不同
+   \item 一般矩阵分解目标函数$\displaystyle\min_V \sum_{((i, j)}|M(i,j))-v_i\cdot v_j|^2$
+  \end{itemize}
+
+  \end{columns}
+
+
+}
+
+\frame{
+  \frametitle{weighted Mean Avarage Precision(wMAP)}
+  \centering\includegraphics[width=0.9\hsize]{file/244943387_o.png}
+}
+
+
+
 \end{document}
