@@ -56,10 +56,10 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
 
 \title[MF+FOL]{Injecting Logical Background for Relation Extraction \[NAACL2015\]}
 
-\institute[UCL]{
+\institute[icst@pku]{
   University College London
 }
-\author[Tim Rockt]{
+\author[Han Zhe]{
   Tim Rockt aschel (UCL)\\
   Sameer Singh (UW)\\
   Sebastian Riedel (UCL)\\ 
@@ -71,18 +71,19 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
   \frametitle{ Outline  }
   
    \begin{itemize}
-      \item 论文概述
-      \item 矩阵分解(Matrix factorization), 一阶谓词逻辑(first-order logic)
-      \item 符号集(Notation)
+      \item 论文方法概述
+      \item 矩阵分解(Matrix factorization), 一阶谓词逻辑(first-order logic)简单比较
+      \item 本文的符号集(Notation)
       \item 一阶谓词逻辑注入(Inject)矩阵分解
 	  \begin{itemize}
 	   \item 矩阵分解之前操作(Pre-Factorization)
 	   \item 融入矩阵分解之中('joint')
+	   \item 一阶逻辑规则$\mathfrak{F}$抽取
 	  \end{itemize}
 
       \item 实验
 	  \begin{itemize}
-	   \item 预处理,规则生成,评价
+	   \item 实验流程,效果简单评价
 	  \end{itemize}
    \end{itemize}
 
@@ -123,6 +124,39 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
 }
 
 \frame{
+  \frametitle{summary Experiemnt}
+  实验框架
+  \begin{columns}[c]
+   \column{.57\hsize}
+   \noindent\scalebox{0.9}{
+\begin{tikzpicture}
+\tikzstyle{Node}=[draw, rectangle, rounded corners, align=center]
+\node [Node, text width=3cm] (rule) {由训练集(\textbf{原始的矩阵})提取\emph{规则集合$\mathfrak{F}$}} ;
+\node [Node, text width=2.5cm, right=of rule] (objective) {目标函数$\displaystyle\min_V \sum_{\mathcal{F}\in\mathfrak{F}}\mathcal{L}([\mathcal{F}])$} ;
+\node [Node, text width=2.8cm, below=of rule] (MF) {利用\textbf{过滤后的矩阵},分解得到初始实体对向量$v_{(e_i,e_j)}$，关系向量$v_{r_m}$} ;
+\node [Node, text width=2.5cm, right=of MF, xshift=1cm] (SGD) {随机梯度下降解得实体对向量$v_{(e_i,e_j)}$，关系向量$v_{r_m}$} ;
+
+\path[-Stealth, blue, thick] 
+  (rule) edge [bend left=10] (objective) 
+  (rule.south) edge [bend left=30] (MF.north) 
+  (MF.east) edge [bend left=10] (SGD.west)
+  (objective.south) edge [bend left=30] (SGD.north) 
+ ;
+\end{tikzpicture}
+}
+
+  \column{.4\hsize}
+  \begin{itemize}
+   \item 不同实验共享相同规则集$\mathfrak{F}$;不同实验“过滤后的矩阵”不同
+   \item 一般矩阵分解目标函数$\displaystyle\min_V \sum_{((i, j)}|M(i,j))-v_i\cdot v_j|^2$
+   \item 得到最终的向量空间后，判断$(e_i,e_j)$是否含有$r_t$关系，只要判断$\sigma(\mathbf{v_{r_m}}\cdot \mathbf{v_{(e_i, e_j)}})$是否大于阈值
+  \end{itemize}
+
+  \end{columns}
+
+}
+
+\frame{
   \begin{itemize}
    \item 矩阵分解(MF) vs 规则抽取(Rule-based)
       \begin{itemize}
@@ -135,7 +169,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
       \end{itemize}
    \item 本文动机
       \begin{itemize}
-       \item 矩阵分解 和 规则（一阶逻辑） 混合
+       \item 矩阵分解 和 规则（一阶逻辑(FOL)） 混合
       \end{itemize}
    \item 本文的贡献
       \begin{enumerate}
@@ -161,7 +195,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
 	\item 复合问题（logical background knowledge）：$professorAt(x,y)\Rightarrow emplyeeAt(x,y)$
       \end{itemize}
   \end{itemize}
-   评价一阶谓词子集$\mathbf{w}$的好坏 
+   评价一阶谓词集合$\mathbf{w}$的好坏 
    \begin{block}{}
     $$p(\mathbf{w}|{V})=\prod_{r_m(e_i,e_j)\in w}\pi_{m}^{e_i,e_j}\prod_{r_m(e_i,e_j)\notin w}(1-\pi_{m}^{e_i,e_j})$$
    \end{block}
@@ -184,6 +218,10 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
 	  \end{itemize}
        \item 将抽取的规则（一阶谓词子集）加入目标函数（Joint Optimization）
        \item 传统矩阵分解生成向量空间$V$，然后使用收集的逻辑规则预测（Post-Factorization Inference）
+	  \begin{itemize}
+	   \item $\mathcal{F}:(r_s(e_i,e_j) \Rightarrow r_t(e_i,e_j)) \in \mathfrak{F}$：若满足$r_s(e_i,e_j)$, 则预测$r_t(e_i,e_j)$为真
+	  \end{itemize}
+
       \end{enumerate}
 
   \end{enumerate}
@@ -223,13 +261,14 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
   方法：根据逻辑规则，增加原始矩阵 $M_{|\mathcal{P}|\times|\mathcal{R}|}$中值为1的元素个数
   \begin{block}{steps}
    \begin{enumerate}
-    \item 收集一阶谓词规则
-    \item 对每一条规则，比如$\mathbf{F}=\forall x,y:r_s(x,y) \Rightarrow (x,y)$
+    \item 收集一阶谓词规则$\mathfrak{F}$
+    \item 对$\mathfrak{F}$中每一条规则，比如$\mathbf{F}=\forall x,y:r_s(x,y) \Rightarrow r_t(x,y)$
 	\begin{itemize}
-	 \item 如果$[(x,y),r_s]$上的值为1，则把$[(x,y),r_t]$上的值置为1
-	 \item 递归做下去，知道没有新的1出现
+	 \item 如果矩阵 $M[(x,y),r_s]$上的值为1，则把$[(x,y),r_t]$上的值置为1
+	 \item 递归做下去，直到没有新的1出现
 	\end{itemize}
     \item 对更新后的矩阵$M_{|\mathcal{P}|\times|\mathcal{R}|}'$进行传统矩阵分解
+    \item 利用$\sigma(\mathbf{v_{r_m}}\cdot \mathbf{v_{(e_i, e_j)}})$预测$(v_{r_m},v_{(e_i, e_j)})$是否应该出现
    \end{enumerate}
 
   \end{block}
@@ -252,7 +291,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
 
 \frame{
   \frametitle{Joint Optimization(组合模型)}
-  核心：把收集的\emph{一阶逻辑规则$\mathfrak{F}$}加入到矩阵分解的目标函数中，训练出更好的属性向量$v_{r_m}$、实体对向量$v_{(e_i,e_j)}$\\
+  核心：把收集的\emph{一阶逻辑规则$\mathfrak{F}$}加入到矩阵分解的目标函数中，训练出更好的属性(关系)向量$v_{r_m}$、实体对向量$v_{(e_i,e_j)}$\\
   训练集的目标函数：$$\displaystyle\min_V \sum_{\mathcal{F}\in\mathfrak{F}}\mathcal{L}([\mathcal{F}])$$
   \begin{block}{}
   \small $[\mathcal{F}]$ is the marginal probability $p(w|V)$ that the formula F is true under the model
@@ -281,8 +320,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
   \frametitle{边缘分布(marginal probability)}
   \begin{block}{}
    $p(\mathbf{w}|{V})=\prod_{r_m(e_i,e_j)\in w}\pi_{m}^{e_i,e_j}\prod_{r_m(e_i,e_j)\notin w}(1-\pi_{m}^{e_i,e_j})$\\
-  $p(\mathbf{w}|{V})=\prod f_{r_m(e_i,e_j)}=f_{r_m(e_i,e_j)}\times f_{r_n(e_k,e_l)}\times ...$\\
-  \end{block}
+  $p(\mathbf{w}|{V})=\prod f_{r_m(e_i,e_j)}=f_{r_m(e_i,e_j)}\times f_{r_n(e_k,e_l)}\times ...$ （相互独立）\\
    \begin{tiny}
    \begin{equation}
     f_{r_m(e_i,e_j)}=
@@ -292,6 +330,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
    \end{cases}
   \end{equation}
   \end{tiny}
+  \end{block}
  
  \begin{itemize}
   \item 当$\mathcal{F}$是原子命题时 $[\mathcal{F}]=\pi_{m}^{e_i,e_j}$\\
@@ -314,7 +353,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
   使用随机梯度下降（stochastic gradient descent）求解
   \begin{block}{}
    \begin{itemize}
-    \item $\mathcal{L}([\mathcal{F}]）:=-\log([\mathcal{F}])$
+    \item $\mathcal{L}([\mathcal{F}]):=-\log([\mathcal{F}])$
     \item 对任意一个$\mathcal{F}$,其只和实体对向量、谓词向量有关
     \item 对任意$\mathcal{L}([\mathcal{F}])$只要求$\partial \mathcal{L}([\mathcal{F}])/\partial v_{r_m}$和$\partial\mathcal{L}([\mathcal{F}])/\partial v_{(e_i,e_j)}$
    \end{itemize}
@@ -326,7 +365,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
 \frame{
   \frametitle{Joint Optimization(组合模型)}
   $\pi_{m}^{e_i,e_j}=\sigma(\mathbf{v_{r_m}},\mathbf{v_{(e_i,e_j)}})$ \\
-  $\mathcal{L}([\mathcal{F}]）:=-\log([\mathcal{F}])$
+  $\mathcal{L}([\mathcal{F}]):=-\log([\mathcal{F}])$
   \begin{columns}[c]
    \column{.55\hsize}
     \begin{block}{$\mathcal{F}= \pi_{m}^{e_i,e_j}$ is a ground atom}
@@ -447,6 +486,8 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
   \frametitle{Experiemnt}
   \begin{columns}[c]
    \column{.57\hsize}
+   以 Joint Optimization为例\\
+  \vspace{5mm}
    \noindent\scalebox{0.9}{
 \begin{tikzpicture}
 \tikzstyle{Node}=[draw, rectangle, rounded corners, align=center]
@@ -474,11 +515,47 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
 
   \end{columns}
 
+}
+
+\frame{
+  \frametitle{dataset}
+  \begin{block}{}
+   $M_{|\mathcal{P}|\times|\mathcal{R}|}$: 41913 entity-pairs × 4111 relations(151 freebase relation)\\ 
+   118781 training facts(7293 belong to freebase) \\
+  \end{block}
+  结果使用MAP和wMAP评价
+  \begin{block}{weighted Mean Avarage Precision(wMAP)}
+   average precision for each relation is weighted by the relation’s number of true facts
+  \end{block}
 
 }
 
 \frame{
-  \frametitle{weighted Mean Avarage Precision(wMAP)}
+  \frametitle{1. Zero-shot Relation Learning}
+  \begin{center}
+   
+  \centering\includegraphics[width=0.7\hsize]{file/test1.png} \\
+  \end{center}
+  
+  MF失败：不能预测未出现过的关系\\
+  Inf和Post效果差：两者采用的向量空间太差，没有优化、、
+}
+
+\frame{
+  \frametitle{experiment 2. 3.}
+  左：实验2, 右：实验3\\
+  \centering\includegraphics[width=1\hsize]{file/test23.png}\\
+  Inf没有考虑freebase relation与pattern“共现”，因而无变化
+}
+
+\frame{
+  
+  \begin{center}
+   \Large 谢谢
+  \end{center}
+}
+\frame{
+  \frametitle{Append： Mean Avarage Precision(MAP)}
   \centering\includegraphics[width=0.9\hsize]{file/244943387_o.png}
 }
 
