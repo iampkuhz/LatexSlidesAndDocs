@@ -185,7 +185,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
 \frame{
   \frametitle{ Notation }
   $\mathcal{P}\subseteq\varepsilon\times\varepsilon$ :实体对$(e_i,e_j)$集合 \\
-  $\mathcal{R}$ :关系$fr_i,p_j$集合 \\
+  $\mathcal{R}$ :关系(freebase relation：$fr_i$, 一般关系$p_j$)集合 \\
   $V$：向量空间$\{v_{fr_1}=\mathbf{v_{r_m}},v_{fr_2},...,v_{p_1}=\mathbf{v_{(e_i,e_j)}},v_{p_2},...\}$ \\
   $\pi_{m}^{e_i,e_j}=\sigma(\mathbf{v_{r_m}},\mathbf{v_{(e_i,e_j)}})$ :实体对与关系的相似性 $\sigma$:sigmoid func
   \begin{itemize}
@@ -296,7 +296,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
   \begin{block}{}
   \small $[\mathcal{F}]$ is the marginal probability $p(w|V)$ that the formula F is true under the model
   \end{block}
-  $\mathcal{L}([\mathcal{F}]）:=-\log([\mathcal{F}])$\\
+  $\mathcal{L}([\mathcal{F}]):=-\log([\mathcal{F}])$\\
   $V$：向量空间$\{v_{fr_1}=\mathbf{v_{r_m}},v_{fr_2},...,v_{p_1}=\mathbf{v_{(e_i,e_j)}},v_{p_2},...\}$ \\
   $p(\mathbf{w}|{V})=\prod_{r_m(e_i,e_j)\in w}\pi_{m}^{e_i,e_j}\prod_{r_m(e_i,e_j)\notin w}(1-\pi_{m}^{e_i,e_j})$
   
@@ -534,11 +534,13 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
   \frametitle{1. Zero-shot Relation Learning}
   \begin{center}
    
-  \centering\includegraphics[width=0.7\hsize]{file/test1.png} \\
+  \centering\includegraphics[width=0.6\hsize]{file/test1.png} \\
   \end{center}
-  
-  MF失败：不能预测未出现过的关系\\
-  Inf和Post效果差：两者采用的向量空间太差，没有优化、、
+  \begin{itemize}
+   \item MF失败：不能预测未出现过的关系
+   \item Post效果差：两者采用的向量空间太差，没有优化
+   \item Inf效果差：只采用逻辑规则$\mathfrak{F}$，原始矩阵非常稀疏，所以$\mathcal{F}:(r_s(e_i,e_j) \Rightarrow r_t(e_i,e_j)) \in \mathfrak{F}$：$r_s(e_i,e_j)$很少被满足
+  \end{itemize}
 }
 
 \frame{
