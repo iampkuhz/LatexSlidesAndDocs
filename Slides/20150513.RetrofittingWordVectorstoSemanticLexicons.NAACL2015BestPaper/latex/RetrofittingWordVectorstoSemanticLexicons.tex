@@ -185,7 +185,6 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
       \column{0.5\hsize}
       \begin{block}{FrameNet}
 	  \begin{itemize}
-	   \item tree-RNN + local and global (document) context features
 	   \item \tiny frame:$Cause\_change\_of\_position\_on\_a\_scale$ $\leftrightarrow{push, raise,..., growth}$
 	  \end{itemize}
 
@@ -336,7 +335,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
       \begin{enumerate}
        \item 传统工具(word2vec)生成初始向量空间$\hat{Q}$
        \item 根据语义字典生成$\Omega$
-       \item 最优化 $\Psi(Q)=$\\  
+       \item 最优(小)化 $\Psi(Q)=$\\  
       \vspace{3mm}
       \end{enumerate}
        \small $\sum_{i=1}^n\biggl[\alpha_i\big\|q_i-\hat{q_i}\big\|^2+\sum_{(i,j)\in E}\beta_{ij}\big\|q_i-q_j\big\|^2\biggl]$
