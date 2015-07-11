@@ -57,7 +57,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
 
 \begin{document}
 
-\title[GloVe]{GloVe: Global Vectors for Word Representation \[EMNLP 2014)\]}
+\title[GloVe]{GloVe: Global Vectors for Word Representation \[EMNLP 2014\]}
 
 \institute[icst@pku]{
   Stanford
@@ -102,25 +102,17 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
 
 
 \frame{
-  \frametitle{词向量模型}
-  global matrix factorization
-  \begin{itemize}
-   \item 可以利用预料中出现频率信息，但是处理 A-B=C-? 问题效果不好
-  \end{itemize}
-  
-  local context window
-  \begin{itemize}
-   \item 处理 A-B=C-? 效果很好，但是利用局部单词的左右窗口内词作为上下文信息，不能利用全局层面的共现信息
-  \end{itemize}
+  \begin{columns}[c]
+   \column{.15\hsize}
+   \column{.7\hsize}
+   \begin{block}{}
+    \centering \Large 词向量模型
+   \end{block}
 
-  GloVe
-  \begin{itemize}
-   \item 综合
-   \item 建立满足A-B=C-D的模型，利用共现信息（共现频率）作为权值标准，最优化模型误差
-  \end{itemize}
+   \column{.15\hsize}
+  \end{columns}
 
 }
-
 
 \frame{
   \frametitle{vector models}
@@ -175,7 +167,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
    \begin{itemize}
     \item 前后窗口（宽度1-4随机）内所有单词的词向量平均作为隐层词向量
     \item 所有单词按照词频构建huffman树，每个中间结点对应一个判别向量，和隐层词向量、目标词向量维数相同
-    \item 每个中间结点的词向量和隐层词向量的点积做sigmod变换后的值，作为选择左分支（0）的概率，否则为走右支（1）的概率
+    \item 每个中间结点的词向量和隐层词向量的点积做sigmod变换后的值，作为选择左分支（1）的概率，否则为走右支（0）的概率
     \item 每个单词是对应一个huffman编码\\
     \only<1>{
     \emph{足球fb（1001），观看（110）}
@@ -311,10 +303,157 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
    \item 当前词$word_i$预测其上下文单词$word_j$: \includegraphics[width=0.3\hsize]{file/eq10.png}
    \item 目标函数为 \includegraphics[width=0.3\hsize]{file/eq11.png}
    \item 合并目标函数中的相同项:  \includegraphics[width=0.3\hsize]{file/eq12.png}
-   }
    \item 根据$X_i=\sum_kX_{ik}$， $P_{ij}=P(j|i)=X_{ij}/X_i$，转化目标函数 \includegraphics[width=0.4\hsize]{file/eq13.png}
-   \item 归一化
+   }
+   \only<2>{
+   \item 转化目标函数 \includegraphics[width=0.3\hsize]{file/eq13.png}
+   \item 归一化的$P_{ij}, Q_{ij}$计算复杂，不使用交叉熵，改用压缩过的最小均方误差衡量$P,Q$差别大小
+   \includegraphics[width=0.2\hsize]{file/eq14.png}  \includegraphics[width=0.3\hsize]{file/eq15.png}
+   \item Mikolov提出限制权重来消除高频词的过度影响 \includegraphics[width=0.3\hsize]{file/eq16.png}
+      \begin{itemize}
+       \item GloVe的目标函数是合理的（？）
+      \end{itemize}
+
+   }
   \end{itemize}
+
+}
+
+\frame{
+  \frametitle{GloVe Model}
+  复杂度分析
+  \begin{itemize}
+   \item 
+  \end{itemize}
+
+}
+
+\frame{
+  \begin{columns}[c]
+   \column{.15\hsize}
+   \column{.7\hsize}
+   \begin{block}{}
+    \centering \Large Experiments
+   \end{block}
+
+   \column{.15\hsize}
+  \end{columns}
+
+}
+
+
+\frame{\footnotesize
+  \frametitle{Experiments}
+  Word analogies
+  \begin{columns}[c]
+   \column{0.5\hsize}
+   \includegraphics[width=0.9\hsize]{file/word_analogies.png}
+   
+   \column{0.5\hsize}
+  \begin{itemize}
+   \item 19544组问题$a\ is\ to\ b\ as\ c\ is\ to\ \_\_ ?$
+   \begin{itemize}
+    \item SVD-S:矩阵元素值压缩$\sqrt{X_{trunc}}$
+    \item SVD-L:压缩$\log(1+X_{trunc})$
+    \item SVD-$f(X)$ ？
+   \end{itemize}
+
+   \item CBOW 效果提升不明显
+  \end{itemize}
+   
+  \end{columns}
+
+}
+
+
+\frame{
+  \frametitle{Experiments}
+  Word Similarity
+  \begin{columns}[c]
+   \column{0.65\hsize}
+   \includegraphics[width=0.9\hsize]{file/word2vec_sim.png}
+   
+   \column{0.3\hsize}
+  \begin{itemize}
+   \item 
+  \end{itemize}
+   
+  \end{columns}
+
+}
+
+\frame{
+  \frametitle{Experiments}
+  NER
+  \begin{columns}[c]
+   \column{0.55\hsize}
+   \includegraphics[width=0.9\hsize]{file/word2vec_NER.png}
+   
+   \column{0.45\hsize}
+  \begin{itemize}
+   \item Discrete: 直接使用 Stanford NER的输出结果
+   \item 50维，窗口大小为5
+  \end{itemize}
+   
+  \end{columns}
+
+}
+
+\frame{
+  \frametitle{Experiments}
+  vector length and window size\\ 
+  \vspace{1mm}
+  \centering \includegraphics[width=1\hsize]{file/winSize_vecSize.png}
+  \begin{columns}[c]
+   \column{0.35\hsize}
+   \begin{itemize}
+    \item 200维就够了
+   \end{itemize}
+
+   
+   \column{0.65\hsize}
+  \begin{itemize}
+   \item symmetric：左右窗口，asymmetric：只有左边窗口
+   \item 句法信息从左到右传递
+   \item 语义信息随着窗口大小变化明显，说明是非局部的信息
+  \end{itemize}
+   
+  \end{columns}
+
+}
+
+\frame{
+  \frametitle{Experiments}
+  
+  \vspace{1mm}
+  \begin{columns}[c]
+   \column{0.45\hsize}
+   \begin{block}{Corpus Size}
+    \begin{itemize}
+    \item Wikipedia 好于 Gigaword，虽然规模小
+      \begin{itemize}
+       \item Wikipedia实体多
+       \item gigaword新闻语料可能有错误信息
+      \end{itemize}
+   \end{itemize}
+   \end{block}
+
+   
+
+   
+   \column{0.65\hsize}
+   \begin{block}{Run-time}
+   single thread of a dual 2.1GHz Intel Xeon E5-2658
+    \begin{itemize}
+    \item 85min: winSize:10, vocabulary:400,000, token:6 billion
+      \begin{itemize}
+       \item Wikipedia实体多
+       \item gigaword新闻语料可能有错误信息
+      \end{itemize}
+   \end{itemize}
+   \end{block}
+   
+  \end{columns}
 
 }
 

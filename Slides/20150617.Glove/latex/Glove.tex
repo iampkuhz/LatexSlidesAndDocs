@@ -57,7 +57,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
 
 \begin{document}
 
-\title[GloVe]{GloVe: Global Vectors for Word Representation \[EMNLP 2014)\]}
+\title[GloVe]{GloVe: Global Vectors for Word Representation \[EMNLP 2014\]}
 
 \institute[icst@pku]{
   Stanford
@@ -86,7 +86,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
 	  \begin{itemize}
 	   \item 模型（目标函数）
 	   \item 对比skip-gram
-	   \item 复杂度分析
+% 	   \item 复杂度分析
 	  \end{itemize}
       
       \item 实验
@@ -102,25 +102,17 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
 
 
 \frame{
-  \frametitle{词向量模型}
-  global matrix factorization
-  \begin{itemize}
-   \item 可以利用预料中出现频率信息，但是处理 A-B=C-? 问题效果不好
-  \end{itemize}
-  
-  local context window
-  \begin{itemize}
-   \item 处理 A-B=C-? 效果很好，但是利用局部单词的左右窗口内词作为上下文信息，不能利用全局层面的共现信息
-  \end{itemize}
+  \begin{columns}[c]
+   \column{.15\hsize}
+   \column{.7\hsize}
+   \begin{block}{}
+    \centering \Large 词向量模型
+   \end{block}
 
-  GloVe
-  \begin{itemize}
-   \item 综合
-   \item 建立满足A-B=C-D的模型，利用共现信息（共现频率）作为权值标准，最优化模型误差
-  \end{itemize}
+   \column{.15\hsize}
+  \end{columns}
 
 }
-
 
 \frame{
   \frametitle{vector models}
@@ -175,7 +167,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
    \begin{itemize}
     \item 前后窗口（宽度1-4随机）内所有单词的词向量平均作为隐层词向量
     \item 所有单词按照词频构建huffman树，每个中间结点对应一个判别向量，和隐层词向量、目标词向量维数相同
-    \item 每个中间结点的词向量和隐层词向量的点积做sigmod变换后的值，作为选择左分支（0）的概率，否则为走右支（1）的概率
+    \item 每个中间结点的词向量和隐层词向量的点积做sigmod变换后的值，作为选择左分支（1）的概率，否则为走右支（0）的概率
     \item 每个单词是对应一个huffman编码\\
     \only<1>{
     \emph{足球fb（1001），观看（110）}
@@ -242,30 +234,38 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
 
 \frame{
   \frametitle{GloVe Model}
-  \begin{columns}[c]
-   \column{0.4\hsize}
-   \begin{block}{}
-   \begin{itemize}
-    \item $X_{ij}:word_j$作为$word_i$上下文出现次数
-    \item $X_i=\sum_kX_{ik}$
-    \item $P_{ij}=P(j|i)=X_{ij}/X_i$
-    \item $F(w_i,w_j,\widetilde{w}_k)=P_{ik}/P_{jk}$
-   \end{itemize}
-   \end{block}
-   
-   \column{0.58\hsize}
-   \begin{enumerate}
-    \item 改用向量差别 \includegraphics[width=0.4\hsize]{file/eq1.png}
-    \item 保持线性结构 \includegraphics[width=0.45\hsize]{file/eq2.png}
-    \item 我们采用$F=exp$或者\includegraphics[width=0.5\hsize]{file/eq7.png}，使得下面的式子成立\\
-     \includegraphics[width=0.35\hsize]{file/eq6.png} \includegraphics[width=0.5\hsize]{file/eq3.png}
-    \item 如果是采用\includegraphics[width=0.6\hsize]{file/eq7.png}，通过增加偏置项使得模拟$w_i^T\widetilde{w}_k$与$X_{ij}$之间的关系：\\
-    \includegraphics[width=0.5\hsize]{file/eq4.png}
-   \end{enumerate}
-
-  \end{columns}
+  共现概率 \\ 
+  \vspace{1mm}
+  \centering \includegraphics[width=1\hsize]{file/ijk.png}
 
 }
+% 
+% \frame{
+%   \frametitle{GloVe Model}
+%   \begin{columns}[c]
+%    \column{0.4\hsize}
+%    \begin{block}{}
+%    \begin{itemize}
+%     \item $X_{ij}:word_j$作为$word_i$上下文出现次数
+%     \item $X_i=\sum_kX_{ik}$
+%     \item $P_{ij}=P(j|i)=X_{ij}/X_i$
+%     \item $F(w_i,w_j,\widetilde{w}_k)=P_{ik}/P_{jk}$
+%    \end{itemize}
+%    \end{block}
+%    
+%    \column{0.58\hsize}
+%    \begin{enumerate}
+%     \item 改用向量差别 \includegraphics[width=0.4\hsize]{file/eq1.png}
+%     \item 保持线性结构 \includegraphics[width=0.45\hsize]{file/eq2.png}
+%     \item 我们采用$F=exp$或者\includegraphics[width=0.6\hsize]{file/eq7.png}，使得下面的式子成立\\
+%      \includegraphics[width=0.35\hsize]{file/eq6.png} \includegraphics[width=0.5\hsize]{file/eq3.png}
+%     \item 如果是采用\includegraphics[width=0.6\hsize]{file/eq7.png}，通过增加偏置项使得模拟$w_i^T\widetilde{w}_k$与$X_{ij}$之间的关系：\\
+%     \includegraphics[width=0.5\hsize]{file/eq4.png}
+%    \end{enumerate}
+% 
+%   \end{columns}
+% 
+% }
 
 
 \frame{
@@ -285,7 +285,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
    \begin{enumerate}
     \item 改用向量差别 \includegraphics[width=0.4\hsize]{file/eq1.png}
     \item 保持线性结构 \includegraphics[width=0.45\hsize]{file/eq2.png}
-    \item \only<1>{ 我们采用$F=exp$或者\includegraphics[width=0.5\hsize]{file/eq7.png}，使得下面的式子成立\\}
+    \item \only<1>{ 我们采用$F=exp$或者\includegraphics[width=0.6\hsize]{file/eq7.png}，使得下面的式子成立\\}
      \includegraphics[width=0.35\hsize]{file/eq6.png} \includegraphics[width=0.5\hsize]{file/eq3.png}
     \item \only<1>{ 如果是采用\includegraphics[width=0.6\hsize]{file/eq7.png}，通过增加偏置项使得模拟$w_i^T\widetilde{w}_k$与$X_{ij}$之间的关系：\\}
     \includegraphics[width=0.5\hsize]{file/eq4.png}
@@ -314,7 +314,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
    \item 根据$X_i=\sum_kX_{ik}$， $P_{ij}=P(j|i)=X_{ij}/X_i$，转化目标函数 \includegraphics[width=0.4\hsize]{file/eq13.png}
    }
    \only<2>{
-   \item 转化目标函数 \includegraphics[width=0.3\hsize]{file/eq13.png}
+   \item 转化目标函数 \includegraphics[width=0.4\hsize]{file/eq13.png}
    \item 归一化的$P_{ij}, Q_{ij}$计算复杂，不使用交叉熵，改用压缩过的最小均方误差衡量$P,Q$差别大小
    \includegraphics[width=0.2\hsize]{file/eq14.png}  \includegraphics[width=0.3\hsize]{file/eq15.png}
    \item Mikolov提出限制权重来消除高频词的过度影响 \includegraphics[width=0.3\hsize]{file/eq16.png}
@@ -326,15 +326,15 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
   \end{itemize}
 
 }
-
-\frame{
-  \frametitle{GloVe Model}
-  复杂度分析
-  \begin{itemize}
-   \item 
-  \end{itemize}
-
-}
+% 
+% \frame{
+%   \frametitle{GloVe Model}
+%   复杂度分析
+%   \begin{itemize}
+%    \item $O(|C|)$
+%   \end{itemize}
+% 
+% }
 
 \frame{
   \begin{columns}[c]
@@ -357,9 +357,9 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
    \column{0.5\hsize}
    \includegraphics[width=0.9\hsize]{file/word_analogies.png}
    
-   \column{0.6\hsize}
+   \column{0.5\hsize}
   \begin{itemize}
-   \item 19544组问题：$a\ is\ to\ b\ as\ c\ is\ to\ \_\_ ?$
+   \item 19544组问题$a\ is\ to\ b\ as\ c\ is\ to\ \_\_ ?$
    \begin{itemize}
     \item SVD-S:矩阵元素值压缩$\sqrt{X_{trunc}}$
     \item SVD-L:压缩$\log(1+X_{trunc})$
@@ -400,12 +400,85 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
    \column{0.45\hsize}
   \begin{itemize}
    \item Discrete: 直接使用 Stanford NER的输出结果
-   \item 20维，窗口大小为5
+   \item 50维，窗口大小为5
   \end{itemize}
    
   \end{columns}
 
 }
 
+\frame{
+  \frametitle{Experiments}
+  vector length and window size\\ 
+  \vspace{1mm}
+  \centering \includegraphics[width=1\hsize]{file/winSize_vecSize.png}
+  \begin{columns}[c]
+   \column{0.35\hsize}
+   \begin{itemize}
+    \item 200维就够了
+   \end{itemize}
 
+   
+   \column{0.65\hsize}
+  \begin{itemize}
+   \item symmetric：左右窗口，asymmetric：只有左边窗口
+   \item 句法信息从左到右传递
+   \item 语义信息随着窗口大小变化明显，说明是非局部的信息
+  \end{itemize}
+   
+  \end{columns}
+
+}
+
+\frame{
+  \frametitle{Experiments}
+  
+  \vspace{1mm}
+  \begin{columns}[c]
+   \column{0.4\hsize}
+   \begin{block}{Corpus Size}
+    \begin{itemize}
+    \item Wikipedia 好于 Gigaword，虽然规模小
+      \begin{itemize}
+       \item Wikipedia实体多
+       \item gigaword新闻语料可能有错误信息
+      \end{itemize}
+   \end{itemize}
+   \end{block}
+
+   
+
+   
+   \column{0.55\hsize}
+   \begin{block}{Run-time}
+   a dual 2.1GHz Intel Xeon E5-2658
+    \begin{itemize}
+    \item populateing X (single thread): 85min: winSize:10, vocabulary:400,000, token:6 billion
+    \item train Model (32 cores): 14min: 300-dim 
+   \end{itemize}
+   \end{block}
+   
+  \end{columns}
+
+}
+
+\frame{
+  \frametitle{VS word2vec}vsWord2vec
+  \begin{itemize}
+   \item word2vec 顺序遍历数据，不支持多进程？
+      \begin{itemize}
+       \item  the code is currently designed for only a single epoch
+      \end{itemize}
+
+  \end{itemize}
+
+  \vspace{1mm}
+  \centering \includegraphics[width=1\hsize]{file/winSize_vecSize.png}
+  \begin{itemize}
+   \item 负采样个数不超过10个
+   \item GloVe收敛更快
+  \end{itemize}
+
+ 
+}
 \end{document}
