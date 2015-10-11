@@ -1,0 +1,1 @@
+pygmentize -l python -f latex -F tokenmerge -P style=default -P commandprefix=PYGdefault -o "GCCDemo.out.pyg" "GCCDemo.pyg" 
