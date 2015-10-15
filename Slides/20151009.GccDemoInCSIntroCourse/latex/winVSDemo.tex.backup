@@ -146,7 +146,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
       \only<2>{
 	\begin{itemize}
 	 \item 下载地址: \href{http://download.microsoft.com/download/5/C/1/5C156922-CA10-49D8-B7E7-9BF092C3B6EB/VS2010ExpressCHS.iso}{VS2010ExpressCHS.iso}
-	 \item win8.1下双击VS2010ExpressCHS.iso文件会自动挂载成磁盘，双击进入，点击\textbf{Setup.hta} 
+	 \item win8.1下双击VS2010ExpressCHS.iso文件会自动挂载成虚拟磁盘，双击进入，点击\textbf{Setup.hta} 
 	\end{itemize}
 	\begin{center}
 	 \includegraphics[width=0.5\hsize]{pic/p2.PNG}
@@ -197,11 +197,12 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
       \item <1-4> {创建工程}
       \item <5-6> {创建c文件}
       \item <7> {运行代码}
-      \item <8> {调试/debug}
+      \item <8-> {调试/debug}
      \end{itemize}
     \end{block}
    
    \column{0.7\hsize}
+   \only<1-7>{
     \begin{itemize}
      \only<1> {\item 新建项目}
      \only<2> {\item win32 控制台应用程序}
@@ -217,13 +218,24 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
      }
      \only<7> {
       \item 创建 test.c 如下，按 \red{\textbf{Ctrl+F5}} 运行即可
-      \item 写完代码后在代码的某一行有红色下滑波浪线，说明代码\textbf{肯定}有问题，查bug吧
-     }
-     \only<8> {
-      \item 
+      \item 写完代码后在代码的某一行有红色下滑波浪线，说明代码\textbf{肯定}有问题，不用执行，直接查bug吧
      }
     \end{itemize}
-    
+   }
+     \only<8> {
+     \setbeamercovered{transparent}
+      \begin{enumerate}
+       \item <1-> {多在程序中间打印中间结果，尤其是代码没有输出/进入死循环时}
+       \item <-.> {VS提示红色波浪线，说明代码不符合语法，肯定不能执行，看看大括号是不是匹配、变量使用之前是否已经定义、 ...}
+      \end{enumerate}
+     }
+    \only<9>{
+      \setbeamercovered{transparent}
+      \begin{itemize}
+       \item debug 断点调试\textbf{demo}
+      \end{itemize}
+
+    }
     \begin{center}
      \only<1> {\includegraphics[width=0.65\hsize]{pic/p13.PNG}}
      \only<2> {\includegraphics[width=0.85\hsize]{pic/p14.PNG}}
@@ -232,6 +244,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
      \only<5> {\includegraphics[width=0.85\hsize]{pic/p17.PNG}}
      \only<6> {\includegraphics[width=0.85\hsize]{pic/p18.PNG}}
      \only<7> {\includegraphics[width=0.85\hsize]{pic/p19.PNG}}
+     \only<9> {\includegraphics[width=0.75\hsize]{pic/p20.PNG}}
     \end{center}
 
 
@@ -281,6 +294,154 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
   \end{columns}
 
 }
+
+
+\frame{
+  \frametitle{Appendix}
+  \begin{columns}[c]
+   \column{.15\hsize}
+   \column{.7\hsize}
+   \begin{block}{}
+    \centering \Large Linux/MacOS使用gcc在命令行下编译执行c程序
+   \end{block}
+
+   \column{.15\hsize}
+  \end{columns}
+
+}
+\frame{
+  \frametitle{Appendix: 安装gcc}
+    \begin{block}{ubuntu14.04}
+      \begin{enumerate}
+       \item \textbf{Ctrl+Alt+T} 启动终端
+       \item 输入`sudo apt-get install gcc`
+      \end{enumerate}
+    \end{block}
+    
+    \begin{block}{MacOS (我没有Mac...)}
+      \begin{enumerate}
+       \item 根据\href{http://stackoverflow.com/questions/9353444/how-to-use-install-gcc-on-mac-os-x-10-8-xcode-4-4}{google的答案}
+       \item 启动终端,然后输入\textbf{xcode-select --install},安装 \textsl{command line tools}
+      \end{enumerate}
+
+    \end{block}
+}
+
+\frame{
+  \frametitle{Appendix}
+    \centering
+    \begin{Large}
+     命令行编译c程序
+    \end{Large}
+    
+    \begin{columns}
+     \column{0.1\hsize}
+     
+     \column{0.8\hsize}
+     \begin{block}{}
+      \begin{enumerate}
+      \item \textbf{gcc} \red{源文件名称} \textbf{-o} \blue{编译后生成的可执行文件名称}
+	\begin{itemize}
+	 \item 确保终端当前所处的目录就是c文件所在目录
+	\end{itemize}
+     \end{enumerate}
+     \end{block}
+     \column{0.1\hsize}
+    \end{columns}
+}
+
+\begin{frame}[fragile]
+  \frametitle{Appendix: 命令行编译c程序}
+  \begin{footnotesize}
+  
+  \begin{columns}
+   \column{0.4\hsize}
+\cCode
+\begin{lstlisting}[frame=single]
+#include <stdio.h>
+int main(){
+    printf("hello world!\n");
+    return 0;
+}
+\end{lstlisting}
+
+  
+   \column{0.5\hsize}
+   左边: hw.c \\
+   
+   左下: main.c \\ 
+   右下: method.c (被main.c调用)
+  \end{columns}
+
+   
+
+  \begin{columns}
+   \column{0.4\hsize}
+\cCode
+\begin{lstlisting}[frame=single]
+#include <stdio.h>
+void multiPrint();
+int main(){
+    multiPrint();
+}
+\end{lstlisting}
+
+  \column{0.5\hsize}
+\cCode
+\begin{lstlisting}[frame=single]
+#include <stdio.h>
+void multiPrint(){
+    printf("hw1!\n");
+    printf("hw2!\n");
+    printf("hw3!\nhw4!\n");
+    return;
+}
+\end{lstlisting}
+  \end{columns}
+
+  \end{footnotesize}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+  \frametitle{Appendix: Ubuntu编译实例}
+  
+  \begin{columns}
+   \column{0.3\hsize}
+  \begin{footnotesize}
+\cCode
+\begin{lstlisting}[frame=single]
+/* hw.c */
+void multiPrint();
+int main(){
+    printf("hw!\n");
+    return 0;
+}
+/* main.c */
+int main(){
+    multiPrint();
+}
+/* method.c */
+void multiPrint(){
+    printf("hw1!\n");
+    printf("hw2!\n");
+    printf("hw3!\n" +
+      "hw4!\n");
+    return;
+}
+ 
+\end{lstlisting}
+  \end{footnotesize}
+
+    \column{0.7\hsize}
+    \includegraphics[width=1\linewidth]{ubuntu-gcc-demo.png}
+
+   
+  \end{columns}
+
+\end{frame}
+
 
 \end{document}
 

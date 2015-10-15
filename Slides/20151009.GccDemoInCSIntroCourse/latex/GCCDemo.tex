@@ -236,65 +236,6 @@ void multiPrint(){
 
 
 \frame{
-  \frametitle{Appendix: ubuntu 安装 eclipse-cdt}
-  \href{http://mirror.cc.columbia.edu/pub/software/eclipse/technology/epp/downloads/release/mars/1/eclipse-cpp-mars-1-linux-gtk-x86_64.tar.gz}{64位下载地址}
-}
-\frame{
-  \frametitle{Summary}
-  \begin{tikzpicture}
-    \tikzstyle{Node}=[draw, rectangle, rounded corners, align=center]
-    \node [Node, text width=2.5cm] (lastTerm) {
-    \emph{上学期计划}
-      \begin{itemize}\scriptsize
-        \item 每日备忘录
-        \item 每周两篇论文
-        \item 考托福
-      \end{itemize}
-
-    } ;
-    \node [Node, text width=4cm, right=of lastTerm] (thisTerm) {
-      \emph{本学期完成}\scriptsize
-      \begin{itemize}
-       \item 每日备忘录
-       \item 维基百科谓词的归一化
-      \end{itemize}
-    } ;
-    
-    \node [Node, text width=5cm, below=of lastTerm] (thisSummer) {
-      \emph{暑期计划}
-      \begin{footnotesize}
-       \begin{itemize}\scriptsize
-       \item 完善中文维基百科知识库的体系
-	\begin{itemize}\scriptsize
-	 \item 借鉴dbpedia，整合中英文维基百科、freebase
-	\end{itemize}
-       \item 看一下有关的书: shell，Java
-       \item 修改NLPCC的论文，继续投稿
-      \end{itemize}
-      \end{footnotesize}
-    };
-    
-    \node [Node, text width=4.5cm, right=of thisSummer] (nextTerm) {
-      \emph{下学期计划}
-      \begin{itemize}\scriptsize
-       \item 尽量在开学时完成知识库体系构建，整理出一篇期刊
-       \item 完成助教学分
-       \item 百度百科的知识库提取和整合
-       \item 动手做点小东西（展示知识库）
-      \end{itemize}
-
-    };
-    
-    \path[-Stealth, blue, thick] 
-      (lastTerm) edge [bend left=10] (thisTerm) 
-      (thisTerm) edge [bend left=10] (thisSummer) 
-      (thisSummer) edge [bend left=10] (nextTerm) 
-      ;
-  \end{tikzpicture}
-
-}
-
-\frame{
   \begin{center}
    \Large 谢谢大家！
   \end{center}
