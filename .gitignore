@@ -1,4 +1,6 @@
 *.out
+*.vrb
+*.toc
 *.nav
 *.log
 *.aux
