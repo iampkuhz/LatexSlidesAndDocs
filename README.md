@@ -1,14 +1,24 @@
-# LatexSlidesAndDocs
+LatexSlidesAndDocs
+==================
 
 纪录所有使用latex生成的ppt和文件。以后再使用latex时可以方便的快速查找。_每个文件都可以直接编译，包含了所需的全部附件文件。使用的环境为ubuntu+kile+texlive2013/texlive2014_
 
-## [1012] 工学院计算概论助教课-windows下使用VS2010教程，[Slides](Slides/20151009.GccDemoInCSIntroCourse/latex/winVSDemo.pdf)
+#### [1012] 工学院计算概论助教课slides
 
-## [0607] Glove 算法介绍, [slides](Slides/20150617.Glove/Glove_Slides_hz.pdf)
+2015秋工学院计算概论课助教课，介绍windows下VS2010使用和ubuntu命令行下gcc编译c程序
+
+> 代码
+* 插入代码高亮
+* 侧边导航显示（setbeamercovered，only标签的混合使用）
+> [Slides](Slides/20151009.GccDemoInCSIntroCourse/latex/winVSDemo.pdf)
+
+#### [0607] Glove 算法介绍
 
 小组会报告，主要将[Glove](http://nlp.stanford.edu/projects/glove/)这个词向量生成工具，主要是将这篇论文[GloVe: Global Vectors for Word Representation](Slides/20150617.Glove/GloVe\:\ Global\ Vectors\ for\ Word\ Representation.pdf)，此外还介绍了一下word2Vec的实现方式。论文主要是解释他提出的这个训练时的目标函数是如何一步步转换得到的，并且说明了其实他的这个目标函数（利用了共现频率信息）和word2vec很像，所以是合理的。
 
-## [0513] Retrofitting Word Vectors to Semantic Lexicons
+> [slides](Slides/20150617.Glove/Glove_Slides_hz.pdf)
+
+#### [0513] Retrofitting Word Vectors to Semantic Lexicons
 
 小组组会报告，[NAACL2015 best paper](http://naacl.org/naacl-hlt-2015/best-paper-awards.html)
 
