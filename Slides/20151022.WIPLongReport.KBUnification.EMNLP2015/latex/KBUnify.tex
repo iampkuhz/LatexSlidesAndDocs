@@ -86,7 +86,7 @@ Roberto Navigli @uniroma1\\
       \begin{itemize}
        \item 作者简介
        \item 相关工作
-       \item 论文问题、方法概述
+       \item 论文动机、方法概述
        \item 实验使用的工具(穿插说)
       \end{itemize}
     \item 归一化（Unification）的方法
@@ -104,17 +104,17 @@ Roberto Navigli @uniroma1\\
 \frame{
   \frametitle{summary/author}
   \begin{figure}[h]
-      \begin{overpic}[scale=.4]
+      \begin{overpic}[scale=.37]
 	{pic/claudio.jpg}
       \end{overpic}
-      \begin{overpic}[scale=.1]
+      \begin{overpic}[scale=.102]
 	{pic/luis.png}
       \end{overpic}
       \begin{overpic}[scale=.4]
 	{pic/navigli.jpg}
-	\only<2>{\put(1,0){
+	\only<2>{\put(-300,-40){
 	  \setlength{\fboxrule}{0pt} 
-	  \setlength{\fboxsep}{-7.5cm} 
+% 	  \setlength{\fboxsep}{-7.5cm} 
 	  \fbox{\includegraphics[width=0.6\hsize]{pic/navigli-babelNet.png}} 
 	}}
       \end{overpic}
@@ -169,16 +169,16 @@ Roberto Navigli @uniroma1\\
       \red{张家辉 \\ ...}\\
       \end{footnotesize}
     };
-    \node [Node, text width=1.5cm, right=of entity] (type) {
-      \emph{关系} \\ 
-      \begin{footnotesize}
-      \brown{配偶}\\
-      \brown{出生日期}\\
-      \brown{子女\\ ...}\\
-      \end{footnotesize}
-    };
+%     \node [Node, text width=1.5cm, right=of entity] (type) {
+%       \emph{关系} \\ 
+%       \begin{footnotesize}
+%       \brown{配偶}\\
+%       \brown{出生日期}\\
+%       \brown{子女\\ ...}\\
+%       \end{footnotesize}
+%     };
     \only<4>{
-    \node [Node, text width=3cm, right=of type] (exap1) {
+    \node [Node, text width=3cm, right=of entity] (exap1) {
       【一】\\
       \begin{footnotesize}
       \blue{微软-CEO-纳德拉}
@@ -189,7 +189,7 @@ Roberto Navigli @uniroma1\\
     };
     }
     \only<5>{
-    \node [Node, text width=3cm, right=of type] (exap1) {
+    \node [Node, text width=3cm, right=of entity] (exap1) {
       【二】\\
       \begin{footnotesize}
       \blue{花果山-所在-连云港}\\ 
@@ -200,7 +200,7 @@ Roberto Navigli @uniroma1\\
     };
     }
     \node [Node, text width=3.5cm, below=of entity] (tripleWP) {
-      zh.wikipedia:李娜-丈夫-姜山
+      zh.baidubaike:李娜-丈夫-姜山
     };
     \node [Node, text width=4cm, below=of tripleWP] (tripleNew) {
       \begin{footnotesize}
@@ -231,8 +231,8 @@ Roberto Navigli @uniroma1\\
     \end{large}
     过程
     \begin{itemize}\begin{footnotesize}
-     \item \textbf{整合多个知识库}（消歧+谓词统一）
      \item 怎么把\blue{李娜-丈夫-姜山}转换成标准的结构？
+     \item 消歧+谓词统一
       \begin{itemize}
        \item 消除其他数据库中主体、客体的歧义
        \item 将不同数据库中含义相同的谓词合并
@@ -241,30 +241,33 @@ Roberto Navigli @uniroma1\\
     \end{itemize}
   }
   \only<3->{
+    \begin{large}
+     如何整合多个知识库？\\
+    \end{large}
+    方法
       \begin{itemize}
   \only<3>{
-    \item 方法
     \begin{footnotesize}
      \item 先对\red{\textbf{实体消歧}}，再对应不同数据库的\red{\textbf{relation归一}}
      \item \red{\textbf{实体消歧}}【1】
       \begin{itemize}\begin{footnotesize}
        \item 对一条三元组的主体、客体的语义候选的所有组合，如果存在一组\red{已经非常好}了，选为\red{种子}
+     \item 找出好的relation （主体的向量集中，比如都表示人;客体的向量集中,比如都表示地点）
        %\item 计算每种relation的\red{种子三元组}中主体、客体的语义向量的均值作为该关系的\red{特征主语向量}、\red{特征客体向量}
        \end{footnotesize}
       \end{itemize}
-    \item \red{\textbf{实体消歧}}【2】
-    \begin{itemize}\begin{footnotesize}
-     \item 找出好的relation （主体的向量集中，比如都表示人;客体的向量集中,比如都表示地点）
-     \end{footnotesize}
-    \end{itemize}
+%     \item \red{\textbf{实体消歧}}【2】
+%     \begin{itemize}\begin{footnotesize}
+%      \item 找出好的relation （主体的向量集中，比如都表示人;客体的向量集中,比如都表示地点）
+%      \end{footnotesize}
+%     \end{itemize}
 
      \end{footnotesize}
   }
   \only<4-6>{
-    \item 方法
     \begin{footnotesize}
       \only<4->{
-    \item \red{\textbf{实体消歧}}【3】
+    \item \red{\textbf{实体消歧}}【2】
       \begin{itemize}\begin{footnotesize}
        \item 【一】对于好的relation，该关系内的所有三元组的主体、客体相互间相似，可以作为其中一个主体做消歧时的文本
 	\only<5->{
@@ -277,7 +280,6 @@ Roberto Navigli @uniroma1\\
     \end{footnotesize}
   }
   \only<7>{
-    \item 方法
     \item 不同知识库的\red{\textbf{relation归一}}
     \item 通过每两个知识库的每任两个relation的\red{主客体特征向量}计算相似性
   }
@@ -294,15 +296,31 @@ Roberto Navigli @uniroma1\\
   \end{columns}
 }
 
+
+\frame{
+  \begin{columns}[c]
+   \column{.15\hsize}
+   \column{.7\hsize}
+   \begin{block}{}
+    \centering \Large 相关工作 \\ 
+   \end{block}
+
+   \column{.15\hsize}
+  \end{columns}
+
+}
+
 \frame{
   \frametitle{related work/introduction}
   \begin{itemize}
    \item Open Information Extraction
     \begin{itemize}
      \item 从Web-scale级别的自然语言信息中抽取结构化/格式化的数据
-     \begin{footnotesize}
-     \item e.g. DBpedia, Freebase, YAGO,...
-     \end{footnotesize}
+      \begin{itemize}\begin{footnotesize}
+       \item e.g. DBpedia, Freebase, YAGO,...
+       \end{footnotesize}
+      \end{itemize}
+
      \item 提升效果/去除噪声数据的方法
       \begin{itemize}
        \item matrix factorization, distant supervision, multi-instance,...
@@ -324,7 +342,7 @@ Roberto Navigli @uniroma1\\
     \begin{itemize}
      \item 罗马大学开发的跨语言语义网，\begin{footnotesize}以“姚明”为例\end{footnotesize}
       \begin{itemize}
-       \item “entity”有中文标签，可以显示中文，“relation”纯英文
+       \item “entity”都是实体，有中文标签；“relation”纯英文
        \item “relation”有重复，无意义的
       \end{itemize}
     \end{itemize}
@@ -365,8 +383,17 @@ Roberto Navigli @uniroma1\\
       \begin{itemize}
        \item 使用一阶逻辑和马尔可夫网络
       \end{itemize}
+   \end{itemize}
+  \end{block}
 
+  \begin{block}{}
+   \begin{itemize}
     \item Grycner and Weikum (2014) :\begin{footnotesize}PATTY的pattern 和 wordNet的谓词 对应\end{footnotesize}
+   \end{itemize}
+  \end{block}
+
+  \begin{block}{}
+   \begin{itemize}
     \item Lin et al. (2012) :\begin{footnotesize}使用freebase的类别来链接reverb中的潜在实体\end{footnotesize}
       \begin{itemize}
        \item reverb record:[2047542	\red{Bilberry}	also\_contains	\red{vitamin\_C}	bilberry	also\_contain	vitamin\_c	1	0.94124	http:...]
@@ -374,25 +401,32 @@ Roberto Navigli @uniroma1\\
    \end{itemize}
   \end{block}
   
-  能适应多个数据库归一的方法
-  \begin{block}{}
-   \begin{itemize}
-    \item Riedel et al. (2013):\begin{footnotesize}训练含有隐式特征（latent feature）的实体、关系向量\end{footnotesize}
-    \item Dong et al. (2014):\begin{footnotesize}使用freebase数据训练一个概率模型来判断抽取结果的准确度\end{footnotesize}
-   \end{itemize}
-
-  \end{block}
 }
 
 \frame{
   \frametitle{related work}
+  能适应多个数据库归一的方法
+  \begin{block}{}
+   \begin{itemize}
+    \item Riedel et al. (2013):\begin{footnotesize}训练含有隐式特征（latent feature）的实体向量、关系向量\end{footnotesize}
+   \end{itemize}
+  \end{block}
+
+  \begin{block}{}
+   \begin{itemize}
+    \item Dong et al. (2014):\begin{footnotesize}使用freebase数据训练一个概率模型来判断抽取结果的准确度\end{footnotesize}
+   \end{itemize}
+
+  \end{block}
   在关系抽取和知识补全上使用Embedding models
   \begin{block}{}
     \begin{itemize}
      \item Socher et al., 2013; Weston et al.,2013; Bordes et al., 2013
-     \item 作者认为这些模型停留在（surface level），不能表达普世的语义（common semantic）
     \end{itemize}
   \end{block}
+    \begin{itemize}
+     \item 作者认为这些模型停留在（surface level），不能表达普世的语义（common semantic）\only<2>{\red{【不能区分多义词？】}}
+    \end{itemize}
 
 }
 
@@ -433,21 +467,17 @@ Roberto Navigli @uniroma1\\
     };
     \node [Node, text width=4cm, below=of tripleWP] (tripleNew) {
       \begin{footnotesize}
-      \red{李娜(网球运动员)}-\brown{配偶}-\red{姜山}
+      \red{李娜(网球运动员)}-丈夫-\red{姜山}
       \end{footnotesize}
-    };
-    \node [Node, text width=3.3cm, below=of tripleNew] (tripleHD) {
-      zh.hudong:李娜(网球)-夫婿-姜山(湖北人)
     };
     \path[-Stealth, blue, thick] 
      (tripleWP) edge [bend left=10] (tripleNew)
-     (tripleHD) edge [bend left=10] (tripleNew)
      ;
   \end{tikzpicture}
   \end{footnotesize}
   
   \column{0.6\hsize}
-  \only<1-2>{
+  \only<1-4>{
     【实体消歧】准备
   \begin{itemize}
    \item BabelNet是一个语义集合（sense inventory），与常见知识库的实体对应
@@ -464,13 +494,18 @@ Roberto Navigli @uniroma1\\
     \end{itemize}
      \only<2>{
       \begin{block}{}\begin{footnotesize}
-       如果是拿维基百科训练，只要把原来正文中的实体标签"[[蘋果公司|苹果]]" 还原成"蘋果公司" 其实可以解决多义的问题/训练出多个词向量【苹果、蘋果公司】？
+       按照论文的图，作者是拿维基百科训练的。\\ 
+       而维基百科内部链接做的很好，很多地方被人工消歧了。\\ 
+       可以训练出多个词向量\{苹果、蘋果公司\}？
        \end{footnotesize}
       \end{block}
      }
+     \only<3>{
+     \includegraphics[width=0.9\hsize]{pic/wikiWSD.png}
+     }
     \end{itemize}
    }
-   \only<3>{
+   \only<5-7>{
     【实体消歧一】找出\red{种子三元组}
     \begin{itemize}
      \item 三元组<$e_d,r,e_g$>,$e_d,e_g$的所有语义\includegraphics[width=0.6\hsize]{pic/sdsg.png},
@@ -478,13 +513,18 @@ Roberto Navigli @uniroma1\\
      \item 任意两个组合中词向量余弦相似度最大的一对作为该三元组消歧的默认最优解
       \includegraphics[width=0.6\hsize]{pic/sdsg2.png}
      \item 如果最优解的相似度大于一个阈值$\zeta$,那么这个最有解是“完美”的，该三元组即为\red{种子三元组}
-      \begin{itemize}
-       \item 这里有点问题，满足$r$的三元组的主语、客体的词向量可能是满足一个特定的角度才是标准的答案
+     \only<6>{
+      \begin{block}{}
+      \begin{itemize}\begin{footnotesize}
+       \item 关系$r$的三元组的主语、客体的词向量可能是满足一个特定的“角度”才是标注的？
+       \end{footnotesize}
       \end{itemize}
+      \end{block}
+      }
     \end{itemize}
    }
    
-   \only<4>{
+   \only<8>{
     【实体消歧二】找出\red{完美关系}
     \begin{block}{def.完美关系}\begin{footnotesize}
      该relation对应的主语(客体)的词向量很集中,方差小
@@ -495,20 +535,28 @@ Roberto Navigli @uniroma1\\
     \begin{itemize}\begin{footnotesize}
      \item $v_D,v_G$表示关系r对应的所有\red{种子三元组}的主语、客体的词向量集合
      \item 该关系的主语、客体中心词向量为 \includegraphics[width=0.6\hsize]{pic/uk.png}
-     \item 该关系的主语、客体方差为\includegraphics[width=0.6\hsize]{pic/sitak.png}
+     \item 该关系的主语、客体方差为\\ \includegraphics[width=0.6\hsize]{pic/sitak.png}
      \item 该关系的总体方差为主客体方差的平均数
      \item 方差越小，说明该关系对应的种子三元组越好
-     \item 如果总体方差小于某个阈值$\delta$，则认为其是好的关系
+     \item 如果总体方差小于某个阈值$\delta$，则认为其是\red{完美关系}
      \end{footnotesize}	
     \end{itemize}
    }
    
-   \only<5>{
-    【实体消歧三】使用相关的文本消歧（分类）
+   \only<9>{
+    【实体消歧三】实体消歧（分类）
     对于任意一个三元组<$e_d,r,e_g$>，比如想要判断$e_d$的含义
     \begin{itemize}
-     \item 如果$r$是好的关系，那么$r$内的种子三元组能正确的反应$r$的含义，使用种子三元组的主语可以作为$e_d$消歧的依据
-     \item 如果$r$不是好的关系，反之，只用当前这条三元组的$r,e_g$来作为分类/消歧的依据
+     \item 如果$r$是好的关系
+    \begin{block}{}\begin{footnotesize}
+     那么$r$内的种子三元组能正确的反应$r$的含义，使用种子三元组的主语可以作为$e_d$消歧的依据
+     \end{footnotesize}
+    \end{block}
+     \item 如果$r$不是好的关系
+    \begin{block}{}\begin{footnotesize}
+     只用当前这条三元组的$r,e_g$来作为$e_d$分类/消歧的依据
+     \end{footnotesize}
+    \end{block}
     \end{itemize}
 
    }
@@ -536,7 +584,11 @@ Roberto Navigli @uniroma1\\
   和 disambiguation 过程类似
   \begin{enumerate}
    \item 对于每个知识库的每种关系，计算其主体、客体的平均向量
-   \item 对于任意两个知识库的任意关系对，计算其相似性如下 
+   \item 对于任意两个知识库的任意关系对$r_i,r_j$，其相似性为$(s_D+s_G)/2$ 
+    \begin{itemize}
+     \item $s_k$定义如下，$k\in\{D,G\}$，其中$\mu_{D}^{r_j}$表示关系${r_j}$的主语向量的平均值
+    \end{itemize}
+
 
   \end{enumerate}
   \begin{center}
@@ -558,20 +610,31 @@ Roberto Navigli @uniroma1\\
   \end{columns}
 
 }
+
 \frame{
   \frametitle{experiment}
-  【数据集】4个，后两个内部有链接，前两个没有
+  【数据集】4个，后两个内部有链接（linked resources），前两个没有
   \begin{center}
      \includegraphics[width=0.5\hsize]{pic/ds.png}
   \end{center}
 
   【额外实验】测试\red{种子三元组}的正确率
-    \begin{itemize}
-     \item 实验的时候认为\red{种子三元组}是完全正确的
-     \item 测试是在patty数据集测试的，一共15m三元组
+    \begin{itemize}\begin{footnotesize}
+     \item 实验的时候认为\red{种子三元组}是完全正确的，实际有一点错误
+     \item 测试在patty上：左边是在全部种子三元组的情况，右边是去掉本来就无歧义的种子三元组
+     \end{footnotesize}
     \end{itemize}
     \begin{center}
      \includegraphics[width=0.5\hsize]{pic/seedCover.png}
+     \includegraphics[width=0.5\hsize]{pic/seedCoverSubset.png}
+%      \begin{overpic}[scale=.15]
+% 	{pic/seedCover.png}
+% 	\only<2>{\put(0,0){
+% 	  \setlength{\fboxrule}{0pt} 
+% % 	  \setlength{\fboxsep}{-7.5cm} 
+% 	  \fbox{\includegraphics[width=0.5\hsize]{pic/seedCoverSubset.png}} 
+% 	}}
+%       \end{overpic}
     \end{center}
 }
 
@@ -595,6 +658,16 @@ Roberto Navigli @uniroma1\\
     \begin{itemize}
 
      \item 下图的“only seed”是指只采用每个类别的种子三元组来表示给类别的主语、客体，进而预测三元组的主语、客体的类别
+      \begin{itemize}
+       \item 不论是否“完美”，都按“完美”考虑
+      \end{itemize}
+     \item (?)PATTY和WISENET本身对应到维基百科实体，理论不用消歧，准确率是100\%：可能是因为：
+      \begin{itemize}
+       \item 一些维基百科本身对应错误
+       \item 作者的方法其实也可以使用在已链接的主客体上
+      \end{itemize}
+
+
       %\item 类似于”随大溜“，多数投票
     \end{itemize}
     \begin{center}
@@ -602,11 +675,48 @@ Roberto Navigli @uniroma1\\
     \end{center}
 }
 
+
+\frame{
+  \frametitle{experiment}
+
+  【额外实验二】不同relation对主客体的限制
+  \only<1>{
+   \begin{columns}
+    \column{0.6\hsize}
+    \begin{center}
+     \includegraphics[width=0.95\hsize]{pic/relationCons.png}
+    \end{center}
+    \column{0.4\hsize}
+    \begin{itemize}\begin{footnotesize}
+     \item $Gen(r)=(\sigma_{D}+\sigma_{G})/2$\\ (主客体的方差)的均值
+     \item $\bar s=avg_{v_r=r}(v_d*v_g)$\\ （三元组的主客体相似度）的均值
+     \item $Gen(r)$ 越大说明relation要求越严格
+     \item $\bar s$ 越大说明主客体的类别要求越低（都是随机出现，则$\bar{s}\approx\sqrt{2}/2\approx 0.7$?）
+     \item \textbf{越普适的relation，对主客体的要求越低}
+     \end{footnotesize}
+    \end{itemize}
+   \end{columns}
+   }
+   \only<2>{
+   \begin{columns}
+    \column{0.6\hsize}
+    \begin{center}
+     \includegraphics[width=0.8\hsize]{pic/relationExp.png}
+    \end{center}
+    \column{0.4\hsize}
+    \begin{itemize}
+     \item 例子
+    \end{itemize}
+   \end{columns}
+   }
+}
+
 \frame{
   \frametitle{experiment}
   【主要实验二】测试relation对应的准确率
+  \only<1>{
   \begin{itemize}
-   \item 为了方便测试，每个数据集只取前1w个关系
+   \item 为了方便测试，每个数据集只取前1w个关系，相互对应
     \begin{itemize}
      \item 随机选取150对，人工判定
     \end{itemize}
@@ -614,6 +724,16 @@ Roberto Navigli @uniroma1\\
     \begin{center}
      \includegraphics[width=0.7\hsize]{pic/ca.png}
     \end{center}
+    }
+   \only<2>{
+  \begin{itemize}
+   \item 对齐的样例
+  \end{itemize}
+    \begin{center}
+     \includegraphics[width=0.5\hsize]{pic/alignExap.png}
+    \end{center}
+    }
+   
 }
 
 
@@ -633,10 +753,17 @@ Roberto Navigli @uniroma1\\
 \frame{
   \frametitle{conclusion}
   \begin{itemize}
+   \item 出发点
+  \begin{itemize}
    \item 同一个关系的不同实例应该有相似的词向量，主语互相比较相像，客体也是
-   \item 不同知识库公用相同的主语、客体，那么不同知识库之间的相同关系应该有相似的主语、客体形式
+   \item 不同知识库如果使用同一套主语、客体entity，那么不同知识库之间的相同关系应该有相似的主语、客体形式
+  \end{itemize}
+
+   \item 实验效果
+  \begin{itemize}
    \item 对\red{种子三元组}和\red{完美关系}这两处筛选/排序使得好的数据起到更大的作用
-   \item 没有统一的评价体系，相互间的优劣不能对比：“我们和别的系统不同，不能照搬，无法比较效果”，很多手工筛选检查
+   \item （缺点）没有统一的评价体系，相互间的优劣不能对比：“我们和别的系统不同；不能照搬；无法比较效果”，很多手工筛选检查
+  \end{itemize}
   \end{itemize}
 
 }
