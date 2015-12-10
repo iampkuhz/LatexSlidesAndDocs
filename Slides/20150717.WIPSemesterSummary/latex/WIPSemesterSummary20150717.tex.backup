@@ -98,8 +98,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
   
     \centering
     \begin{Large}
-     研究生课程\\ 
-     
+     研究生课程
     \end{Large}
 
     \begin{columns}
@@ -135,6 +134,7 @@ shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersec
    \begin{block}{}
     \centering \Large 实验室工作 \\ 
     \small --- 新华社新闻类别标注
+    喆
    \end{block}
 
    \column{.15\hsize}
