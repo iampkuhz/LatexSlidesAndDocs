@@ -1,0 +1,37 @@
+\documentclass{article}
+\usepackage{fontspec}
+\usepackage{listings}
+\newfontfamily\listingsfont[Scale=.7]{SimSun}
+\newcommand{\cCode}[0]{\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{OliveGreen}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+}}
+
+\lstset{frame=single}
+
+\begin{document}
+
+\cCode
+\begin{lstlisting}[basicstyle=\listingsfont]
+/* Hello World program */
+#include<stdio.h>
+main()
+{
+    printf("Hello World");
+}
+\end{lstlisting}
+
+\cCode
+\begin{lstlisting}[basicstyle=\linespread{0.8}\listingsfont]
+/* Hello World program */
+#include<stdio.h>
+main()
+{
+    printf("Hello World");
+}
+\end{lstlisting}
+
+\end{document}
