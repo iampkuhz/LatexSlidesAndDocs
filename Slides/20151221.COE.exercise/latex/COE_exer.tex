@@ -107,17 +107,17 @@
 \vspace{0.5cm}
 
  \begin{block}{综合练习}
-旋转输出矩阵 \\ 
+\sout{转输出矩阵} \\ 
 例题(7.6) 不能一起吃的食物 \\ 
 例题(15.5) 算24 (1103) \\ 
 进制转换 \\ 
-计算反序数 \\ 
-放苹果问题 \\ 
-习题(14-3) 奇数单增序列 \\ 
-1090 分解因数 \\ 
+\sout{计算反序数} \\ 
+\sout{放苹果问题} \\ 
+\sout{习题(14-3) 奇数单增序列} \\ 
+\sout{1090 分解因数} \\ 
 习题(15-1) 前缀表达式 (1010) \\ 
-文字排版 \\ 
-验证子串 
+\sout{文字排版} \\ 
+\sout{验证子串 }
  \end{block}
  
 
@@ -125,14 +125,14 @@
  \begin{block}{结构体与链表}
  删除数组中的元素（链表）\\ 
 统计学生信息（使用动态链表完成）\\ 
-谁拿了最多奖学金\\ 
-例题(13.5) 班级学生成绩统分\\ 
+\sout{谁拿了最多奖学金}\\ 
+班级学生成绩统分\\ 
 链表合并排序
  \end{block}
  \begin{block}{模拟}
  满足条件的数累加\\ 
 字母次数\\ 
-求均方差(用指针完成)\\ 
+\sout{求均方差(用指针完成)}\\ 
 提取数字串按数值排序\\ 
 二维数组回形遍历\\ 
 扩号匹配问题\\ 
@@ -165,7 +165,7 @@
      \only<1>{\includegraphics[width=0.9\hsize]{pic/满足条件的数累加.png}}
      \only<2>{
       \begin{itemize}
-       \item 注意利用VS的排版
+       \item 注意利用VS的自动排版
        \item 不需要数组存储，来一个$m,n$，处理一个$m,n$就好
       \end{itemize}
       }
@@ -181,12 +181,25 @@
 \frame{
   \frametitle{字母次数}
      \only<1-2>{\includegraphics[width=0.9\hsize]{pic/字母次数-o.png}
+     \only<2>{
       \begin{itemize}
        \item 如何判断字符等价？判读字符在某个范围？
       \end{itemize}
-      \only<2>{\includegraphics[width=0.99\hsize]{pic/字母次数-bad2.png}\\ }
+      \includegraphics[width=0.99\hsize]{pic/字母次数-bad2.png}\\ 
+      }
+      }
+      \only<3>{
+    \begin{columns}
+     \column{0.7\hsize}
+     \includegraphics[width=1\hsize]{pic/字母次数.png}
+     \column{0.3\hsize}
+     \begin{itemize}\footnotesize
+      \item A[1]=A['B'-'A']表示'B'的出现次数
+      \item a[3]=A['d'-'a']表示'd'的出现次数
+     \end{itemize}
+    \end{columns}
      }
-     \only<3>{\includegraphics[width=0.7\hsize]{pic/字母次数.png}\\ }
+     
 }
 
 \subsection{3.求均方差(用指针完成)}
@@ -236,6 +249,7 @@
       \item 这个同学至少犯了以下\textbf{错误}
      \end{itemize}
      \begin{enumerate}\footnotesize
+      \item 数组开的不够大（至少\textbf{301}，建议\red{330}+）
       \item 数组a\red{没有初始化}
       \item \red{字符和整数}的关系没有搞明白
 	\begin{itemize}\footnotesize
@@ -266,7 +280,7 @@
      \begin{itemize}
       \item 每次从左上角开始顺时针扫描一圈
       \item 移动起始点，继续做
-      \item 考虑清楚结束条件
+      \item \blue{考虑清楚结束条件}
       \item 考虑清楚每圈的行坐标，列坐标
      \end{itemize}
      \includegraphics[width=0.9\hsize]{pic/二维数组回形遍历-思路1.png}
@@ -395,7 +409,7 @@
      \only<2-3>{\includegraphics[width=0.6\hsize]{pic/删除2.png}}
      \only<4-5>{\includegraphics[width=0.6\hsize]{pic/删除3.png}}
      \only<6-7>{\includegraphics[width=0.6\hsize]{pic/删除4.png}}
-     \only<8-9>{\includegraphics[width=0.6\hsize]{pic/删除5.png}}
+     \only<8-9>{\includegraphics[width=0.7\hsize]{pic/删除5.png}}
      \end{columns}
 }
 
@@ -427,7 +441,7 @@
 }
 
 \frame{
-  \frametitle{3.谁拿了最多奖学金}
+  \frametitle{3.谁拿了最多奖学金(不讲)}
      \only<1>{\centering\includegraphics[width=0.65\hsize]{pic/谁拿了最多奖学金.png}}
      \only<2>{\centering\includegraphics[width=0.65\hsize]{pic/谁拿了最多奖学金-good.png}}
 }
@@ -514,7 +528,9 @@
      \begin{columns}
       \column{0.3\hsize}	
      \begin{itemize}
-      \item 和上机模拟的`二维数组回形遍历`一样，输出的时候两端夹逼
+      \item 和上机模拟的`二维数组回形遍历`类似
+      \item 先从一个方向把二维数组输出到一维数组中
+      \item 再头尾两个指针输出（两端夹逼）
      \end{itemize}
      
      \column{0.7\hsize}
@@ -557,8 +573,10 @@
       \item 我把1500011105同学的代码注释了作为样例
       \item 递归，每次做一步运算，枚举每种情况
       \item 运算前保留原状态，运算结束后还原，为下一次运算做准备
+      \item 理论上是近似解:和24的差值小于$10^{-9}$
      \includegraphics[width=0.85\hsize]{pic/算24-思路.png}}
-      \only<4>{\item 再贴一个我过的样例，不是特别好}
+      \only<4>{\item 再贴一个我过的样例，不是特别好
+      \item 每个函数都被其下面紧邻的函数调用}
      \end{itemize}
      
      \column{0.7\hsize}
@@ -587,7 +605,7 @@
 }
 
 \frame{
-  \frametitle{5.计算反序数}
+  \frametitle{5.计算反序数(不讲)}
   
      \only<1>{\centering\includegraphics[width=0.65\hsize]{pic/计算反序数.png}}
      \only<2->{
@@ -595,15 +613,17 @@
       \column{0.3\hsize}	
      \begin{itemize}
       \item 不讲了，直接贴代码
+      \item 几个特殊情况（都包含在样例里了）
+
      \end{itemize}
      
      \column{0.7\hsize}
-     \only<2>{\includegraphics[width=0.85\hsize]{pic/计算反序数-good.png}}
+     \only<2>{\includegraphics[width=0.65\hsize]{pic/计算反序数-good.png}}
      \end{columns}
      }
 }
 \frame{
-  \frametitle{6.放苹果问题}
+  \frametitle{6.放苹果问题(不讲)}
   
      \only<1>{\centering\includegraphics[width=0.65\hsize]{pic/放苹果问题.png}}
      \only<2->{
@@ -619,7 +639,7 @@
      }
 }
 \frame{
-  \frametitle{7.奇数单增序列}
+  \frametitle{7.奇数单增序列(不讲)}
   
      \only<1>{\centering\includegraphics[width=0.65\hsize]{pic/奇数单增序列.png}}
      \only<2->{
@@ -630,7 +650,7 @@
      \end{itemize}
      
      \column{0.7\hsize}
-     \only<2>{\includegraphics[width=0.85\hsize]{pic/奇数单增序列-good.png}}
+     \only<2>{\includegraphics[width=0.75\hsize]{pic/奇数单增序列-good.png}}
      \end{columns}
      }
 }	
@@ -654,35 +674,86 @@
 \frame{
   \frametitle{9.前缀表达式}
   
-     \only<1>{\centering\includegraphics[width=0.65\hsize]{pic/前缀表达式.png}}
+     \only<1>{\centering\includegraphics[width=0.85\hsize]{pic/前缀表达式.png}}
      \only<2->{
      \begin{columns}
-      \column{0.3\hsize}	
-     \begin{itemize}
+      \column{0.4\hsize}	
+     \begin{itemize}\footnotesize
       \only<2>{\item 思路1：按照要求来：出现连续两个整数，就应该用他们加上他们之前的运算符进行运算，将三个元素替换成一个元素，然后不断做，直到只剩一个元素，就是我们要的结果}
       \only<3>{\item 思路2：递归
-	\begin{itemize}
+	\begin{itemize}\footnotesize
 	 \item block = (+) (subBlock1) (subBlock2)
 	 \item subBlock1 = (-) (subBlock11) (subBlock12)
 	\end{itemize}
 	}
      \end{itemize}
      
-     \column{0.7\hsize}
+     \column{0.6\hsize}
      \only<2>{\includegraphics[width=0.85\hsize]{pic/前缀表达式-good.png}}
-     \only<3>{\includegraphics[width=0.85\hsize]{pic/前缀表达式-good2.png}}
+     \only<3>{\includegraphics[width=0.7\hsize]{pic/前缀表达式-good2.png}}
      \end{columns}
      }
 }
 
 \frame{
-  \frametitle{几个问题}
-  int num[300] = \{0\};
-  头文件
-  本地运行过不了样例的，提交上去99.999999999\%过不了
-  很奇怪的数（-1208899956），数组越界！
-  机器很死板，你得按照他的格式来
+  \frametitle{10.文字排版(不讲)}
+  
+     \only<1>{\centering\includegraphics[width=0.65\hsize]{pic/文字排版.png}}
+     \only<2->{
+     \begin{columns}
+      \column{0.3\hsize}	
+     \begin{itemize}
+      \item 直接放代码了
+      \item 记录当前行的宽度$lineLen$，如果加上下一个单词之后长度大于80，则下一个单词要换行输出，并且新行的宽度变成下一个单词的长度
+     \end{itemize}
+     
+     \column{0.7\hsize}
+     \only<2>{\includegraphics[width=0.85\hsize]{pic/文字排版-good.png}}
+     \end{columns}
+     }
+}
+\frame{
+  \frametitle{11.验证子串(不讲)}
+  
+     \only<1>{\centering\includegraphics[width=0.65\hsize]{pic/验证子串.png}}
+     \only<2->{
+     \begin{columns}
+      \column{0.3\hsize}	
+     \begin{itemize}
+      \item 直接放代码了
+      \item $strstr(s1,s2)$返回s2在s1中作为子串出现是的首地址
+     \end{itemize}
+     
+     \column{0.7\hsize}
+     \only<2>{\includegraphics[width=0.85\hsize]{pic/验证子串-good.png}}
+     \end{columns}
+     }
 }
 
+\frame{
+  \frametitle{几个问题/建议}
+  \begin{itemize}
+   \item 想好怎么做（过程）再写代码
+   \item 提高=读懂别人的代码+\red{\textbf{自己实现}}
+   \item 常用函数的头文件背好
+   \item 本地运行过不了样例的，提交上去99.999999999\%过不了
+   \item 很奇怪的数/字符（-1208899956，烫烫烫）:数组越界！
+   \item `Empty output file`没输出:\red{数据没读完（程序没有足够的内存记录待读入的数据）} 或者 程序中有死循环
+   \item $int num[300] = \{0\}$的含义:只初始化$nums[0]=0$，之后的数据值\red{未知}
+  \end{itemize}
+  
+}
+
+\frame{
+  \frametitle{最后}
+  
+  \begin{columns}\centering
+   \column{0.5\hsize}
+   \includegraphics[width=0.85\hsize]{pic/anny.jpg}
+   \column{0.5\hsize}
+   \includegraphics[width=0.85\hsize]{pic/anny-origin.jpg}
+  \end{columns}
+
+}
 
 \end{document} 
