@@ -1,0 +1,29 @@
+\documentclass[mathserif]{beamer}
+\usepackage{pst-plot,animate}
+\begin{document}
+
+\begin{frame}[t]{Lissajous in action}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\begin{animateinline}[%
+  width=0.9\linewidth,
+  begin={\begin{pspicture}(-2.1,-2.1)(2.1,2.1)},
+  end={\end{pspicture}},
+  controls, %palindrome, %autoplay
+]{3}
+\multiframe{72}{iA=50+50,iB=5+5}{
+  \psset{algebraic,plotpoints=\iA,linecolor=red}
+  \parametricplot{0}{\iB}{2*sin(7*t*Pi/180)|2*cos(11*t*Pi/180)}
+}
+\end{animateinline}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{align}
+    x(t)&=2\sin(7t)\\
+    y(t)&=2\cos(11t)    
+\end{align}
+\end{column}
+\end{columns}
+\end{frame}
+
+\end{document}

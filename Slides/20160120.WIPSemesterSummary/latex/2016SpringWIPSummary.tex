@@ -1,0 +1,136 @@
+
+
+\documentclass[color=usenames,dvipsnames]{beamer}
+
+\usepackage[adobefonts,noindent]{ctex} %中文支持
+\setCJKmainfont{SimSun}
+
+\mode<presentation> {
+
+\usetheme{Madrid}
+\usecolortheme{lily}
+\useoutertheme{infolines}
+
+}
+
+
+\usepackage{booktabs} 
+\usepackage{tikz}
+
+% for gif
+% \usepackage[dvipdfmx]{movie15}
+\usepackage{graphicx}
+\usepackage{animate}
+\usepackage{media9}
+
+% Thin fonts
+\usepackage{cmbright}
+\usepackage[T1]{fontenc}
+
+\definecolor{dark_grey}{gray}{0.5}
+\setbeamercolor{normal text}{fg=dark_grey,bg=white}
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamercolor*{palette primary}{fg=gray!100,bg=gray!10}
+\setbeamercolor*{palette quaternary}{fg=gray!100,bg=gray!10}
+\setbeamercolor*{palette secondary}{fg=gray!100,bg=gray!20}
+\setbeamercolor*{palette tertiary}{fg=gray!100,bg=gray!10}
+\setbeamercolor*{navigation symbols}{fg=white,bg=white}
+\usefonttheme{default}
+
+
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamercolor{block title}{bg=gray!10}
+\setbeamercolor{block body}{fg=gray,bg=gray!10}
+%\setbeamercolor{frametitle}{fg=}
+
+\setbeamertemplate{frametitle}[default][center]
+
+\setbeamertemplate{itemize items}[default]
+\setbeamertemplate{enumerate items}[default]
+
+\newcommand{\F}{\mathbb{F}}
+
+
+\title[2015 Summ]{2015秋季学期总结}
+\author{韩喆}
+\institute{PIE@WIP}
+\date{2016-01-21}
+\begin{document}
+
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% Uncomment these lines for an automatically generated outline.
+%\begin{frame}{Outline}
+%  \tableofcontents
+%\end{frame}
+
+\begin{frame}
+
+
+\section{Introduction}
+\frametitle{工作简介}
+\begin{itemize}
+\item  助教：冯老师开的2015级工学院《计算概论》
+\item \color{Green}
+ 组会报告：大组会2次+小组会2次
+\item\color{RedOrange} 实验室新主页
+\color{blue}
+\item 结构化知识库构建+展示
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{助教}
+ \begin{block}{}
+  2015级工学院计算概论
+ \end{block}
+
+ \begin{itemize}
+  \item 和吕超、李友焕师兄担任助教
+  \item 每周一下午的上机辅导
+  \item 两次课堂答疑/习题课，期中/期末监考，阅卷
+ \end{itemize}
+ 
+ \pause
+ 感想
+ \begin{itemize}
+  \item 感觉回到了本科的时候，但是没有绩点的压力了
+  \item 编程能力还有待提高
+ \end{itemize}
+\end{frame}
+
+\begin{frame}{组会报告}
+ \begin{block}{大组会}
+  \begin{itemize}
+   \item EMNLP 2015 的一篇做不同知识库的合并工作的文章
+    \begin{itemize}
+     \item Knowledge Base Unification via Sense Embeddings and Disambiguation
+     \item 合并实体、合并谓词
+    \end{itemize}
+   \item 目前工作：中文知识库构建
+    \begin{itemize}
+     \item 构建自己的\begin{color}{blue}类别\end{color}和\begin{color}{red}谓词\end{color}集合
+    \end{itemize}
+  \end{itemize}
+ \end{block}
+
+ \begin{block}{小组会}
+  \begin{itemize}
+   \item 介绍了几个自己在用的工具/软件，
+  \end{itemize}
+
+ \end{block}
+
+\end{frame}
+
+
+\begin{frame}{Introduction}
+
+\animategraphics[loop,height=0.5\textheight]{2}{pic/ontology-}{0}{56}
+\end{frame}
+
+\end{document} 
