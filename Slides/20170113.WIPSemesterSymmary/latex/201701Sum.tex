@@ -1,0 +1,190 @@
+\documentclass[xcolor=svgnames,dvipsnames,table, hyperref=pdftex, mathserif, presentation]{beamer}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{ctex}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{wasysym}
+\usepackage{bbm}
+\usepackage{url}
+\usepackage{beamerleanprogress}
+\usepackage{tikz-dependency}
+\usepackage{tikz-qtree}
+\usepackage{hhline}
+\usepackage{fancyvrb}
+\usepackage{mathrsfs}
+\usepackage{multirow}
+\usepackage{alltt}
+\usepackage[subrefformat=parens]{subcaption}
+% for uml charts
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta, graphs, trees, shapes, positioning, automata,
+shapes.geometric, shapes.multipart, er, patterns, decorations.markings, intersections, decorations.text}
+\usepackage{tikz-uml}
+
+\usetheme{CambridgeUS}
+%\usetheme{Pittsburgh}
+\usecolortheme{orchid} % seahorse  orchid rose
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\AtBeginSection[]{%
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+      \tableofcontents[current] 
+    \end{frame}
+  \addtocounter{framenumber}{-1}% If you don't want them to affect the slide number
+}
+\AtBeginSubsection[]
+{
+  \begin{frame}
+  \frametitle{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  %\tableofcontents[sectionstyle=show/hide,subsectionstyle=hide/show/hide]
+  \end{frame}
+  \addtocounter{framenumber}{-1}% If you don't want them to affect the slide number
+}
+\newcommand{\setof}[1]{\ensuremath{\left \{ #1 \right \}}}
+\newcommand{\tuple}[1]{\ensuremath{\left \langle #1 \right \rangle }}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\brown}[1]{\textcolor{brown}{#1}}
+\newcommand{\green}[1]{\textcolor{green}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\cyan}[1]{\textcolor{cyan}{#1}}
+
+%gets rid of navigation symbols
+%\setbeamertemplate{navigation symbols}{}
+
+\begin{document}
+
+\title[2017.Sum]{2016年秋季学期总结}
+
+\institute[icst@pku]{
+  Institute of Computer Science \& Technology \\
+  Peking University
+}
+\author[Zhe]{
+  Zhe, Han
+}
+
+\frame[t,plain]{ \titlepage } % [t,plain]
+
+\frame{
+  \frametitle{ Outline }
+   \begin{itemize}
+      \item 找工作
+      \item 学术
+      \item 科研 \&\& 实验室工作
+   \end{itemize}
+}
+
+\frame{
+  \frametitle{找工作}
+  \begin{columns}
+   \column{0.7\hsize}
+    \begin{itemize}
+     \item 杭州\blue{蚂蚁金服}
+     \item 9.10 拿到 offer, 后面找工作的时候划水...
+    \end{itemize}
+    \end{columns}
+}
+
+% 
+% \frame{
+%   \frametitle{找工作}
+%   \begin{columns}
+%    \column{0.3\hsize}
+%     \begin{itemize}
+%      \item 杭州\blue{蚂蚁金服}
+%      \item 9.9 拿到 offer
+%      \item 后面划水
+%     \end{itemize}
+% 
+%    \column{0.7\hsize}
+%     \begin{block}{杭州实习/生活}
+%      \begin{enumerate}\small
+%       \item \red{IOT}工作室，对话机器人+AR/VR
+%       \item 工作内容：\sout{机器人项目维护}+AR安卓demo
+%       \item 团队基本NLP出身， 人nice， 有牛人
+%       \item 频繁的对外交流:码力vs合作?新项目成就感vs弯路?
+%       \item 双休，9点半-10点上班，7-9点下班？
+% 	\begin{itemize}\footnotesize
+% 	 \item 组里很多人家人不在杭州，周末回家
+% 	\end{itemize}
+%       \item 一个人的生活单调，奥运会/跑步
+%       \item 杭州潮湿
+%       \item 感谢沈许川/饶俊阳师兄
+%      \end{enumerate}
+%     \end{block}
+% 
+%   \end{columns}
+% }
+
+
+\frame{
+  \frametitle{学术}
+  \begin{itemize}
+   \item 终于发了文章
+    \begin{itemize}
+     \item Detecting Synonymous Predicates from Online Encyclopedia with Rich Features
+     \item AIRS 2016 长文
+     \item 11.24 骑ofo去清华做了报告
+    \end{itemize}
+   \item 一直拖着的知识库构建的期刊...
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{科研 \&\& 实验室工作}
+    \begin{itemize}
+     \item 知识库
+      \begin{itemize}
+       \item 完成了\blue{百度百科}数据爬取、整理
+	\begin{itemize}
+	 \item 各种坑：页面存储、磁盘空间、页面去重、别名表抽取与排序、PKUBase类别对应
+	 \item 1100w实体,4500w三元组,1800w的类别信息,1500w的别名表
+	\end{itemize}
+       \item 找到了\textbf{接班人}...
+	\begin{itemize}
+	 \item 带吴雨婷师妹做了一些东西（任务很艰巨），希望把知识库的维护做下去
+	\end{itemize}
+       \item 做了\red{新版的前端}展示界面
+	\begin{itemize}
+	 \item 自认为界面友好度or美观程度提高了不少...
+	\end{itemize}
+       \item 方正提供了一个知识库版本
+      \end{itemize}
+     \item 新华社新闻分类
+      \begin{itemize}
+       \item 回来后整理了一下之前的数据
+       \item 帮老师跑了几次会、交了一些材料，终于算是结项了
+      \end{itemize}
+    \end{itemize}
+
+}
+
+\frame{
+  \frametitle{科研 \&\& 实验室工作}
+    \begin{itemize}
+     \item 下一步工作
+      \begin{itemize}
+       \item \brown{进行中}：知识库\red{实体链接}
+       \item \brown{进行中}：百度百科与维基百科的融合
+	\begin{itemize}
+	 \item 目前2个知识库版本已经有了各自的别名表、三元组、PKUBase类别信息
+	\end{itemize}
+       \item \red{期刊}...
+      \end{itemize}
+    \end{itemize}
+}
+
+\frame{
+  \begin{columns}[c]
+   \column{.3\hsize}
+   \column{.4\hsize}
+   \begin{block}{}
+    \centering \Large 谢谢大家！ \\ 
+   \end{block}
+   \column{.3\hsize}
+  \end{columns}
+}
+
+\end{document}

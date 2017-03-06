@@ -1,0 +1,66 @@
+1. 大小写统一
+2. 单词的发音: predicate, synonym, ratio, 
+3. 中文的英文注释
+4. 开头\结尾的ppt需要修改(把要讲的文字放到ppt上面直接读)
+
+1. 没有和别人的实验对比!!!!
+
+
+hello, everyone. 
+My name is Han zhe, a graduate student from Institute of Computer Science & Technology, Pkeing University
+next I'll give a report on Detecting Synonymous Predicates from Online Encyclopedia with Rich Features.
+
+
+#### P1 ####
+
+first I'll introduce Predicate unification background. Then the motivation of the report and related work will be discussed. 
+After that, I'll give the Problem definition. 
+detailed info about predicate representation would be explained.
+Next, experiment and analysis will be given.
+some conclusion would be give and I'll share my up-to-date work at last.
+
+#### P2 ####
+
+
+As we all know, there are many semi-structured info in online Encyclopedias, which we called infobox.
+editors can modify infobox directly.
+many well-known KB, such as DBpedia, YAGO, Freebase are based on these infobox.
+
+However, there are many obstacles when building structured KBs.
+you need to build a taxonomy to represent your category hierachy.
+there are many forms of one predicate in different infoboex, caused by editors' lack of prior knowledge.
+object value should also correspond to their datatypes and you should be linked property if it's an entity.
+
+
+#### P3 ####
+
+above all, predicate unification is of great importance and difficulty.
+
+too many surface forms of one predicates 
+due to editor's preference, some predicates many be too concrete while some may be too general
+In the aspect of Chinese KB. 
+
+
+
+
+#### P9 ####
+
+left side is the infobox of NBA player steph curry, while right side is the wikitext of this page. wikitext is the lighweight markup language used in Wikipedia. 
+
+the phrase in green rectangle in left part are predicates. Most of them have corresponding wikitext predicates on the right side. BTW, these two set of predicate are not one-one mapping.
+the phrase in black rectangle are section info of each predicate.
+the phrase in blue rectangle in right part is the infobox name.
+
+
+#### P13 ####
+
+there are 5 feature in surface form features. we calculate the character overlap, edit-distance and some other surface form features.
+Pinyin and bilingual features are similar to surface form features. 
+the only diff is character equal is replace by pinyin equal of english word equal wen calculate similarities. 
+
+
+#### P19 ####
+
+next is the result of Minus one kind feature experiment. We want to find the duplicate features in this experiment. The f1 score of the rest features are show here. BTW, the deleted feature is more important and inreplaceable if the rest feature set has lower f1 score. 
+surface form} and {wikitext} features are irreplaceable.
+Bi-Dictionary seems to be useless. It was because the cross language message in bi-dict features are covered by wikitext features. Wikitext are mostly english words based, and is a kind of bi-dictionary in some aspects. Wikitext feature didn't show outstanding result on single feature experiment Because our dataset are selected randomly and there exist many less frequent predicates which wikitext info cannot be fully extracted. wikitext feature and   

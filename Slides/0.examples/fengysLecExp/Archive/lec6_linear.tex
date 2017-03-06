@@ -1,0 +1,451 @@
+\documentclass[xcolor=svgnames,dvipsnames,table, hyperref=pdftex, mathserif, presentation]{beamer}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{graphics}
+\usepackage{xcolor}
+\usepackage{wasysym}
+\usepackage{bbm}
+\usepackage{url}
+\usepackage{CJK}
+\usepackage{beamerleanprogress}
+\usepackage{tikz-dependency}
+\usepackage{tikz-qtree}
+
+\usetheme{CambridgeUS}
+%\usetheme{Pittsburgh}
+\usecolortheme{orchid} % seahorse  orchid rose
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\AtBeginSection[]{%
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+      \tableofcontents[current] 
+    \end{frame}
+  \addtocounter{framenumber}{-1}% If you don't want them to affect the slide number
+}
+\AtBeginSubsection[]
+{
+  \begin{frame}
+  \frametitle{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  %\tableofcontents[sectionstyle=show/hide,subsectionstyle=hide/show/hide]
+  \end{frame}
+  \addtocounter{framenumber}{-1}% If you don't want them to affect the slide number
+}
+\newcommand{\setof}[1]{\ensuremath{\left \{ #1 \right \}}}
+\newcommand{\tuple}[1]{\ensuremath{\left \langle #1 \right \rangle }}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\brown}[1]{\textcolor{brown}{#1}}
+\newcommand{\green}[1]{\textcolor{green}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\cyan}[1]{\textcolor{cyan}{#1}}
+
+%gets rid of navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+\begin{document}
+\begin{CJK}{UTF8}{gbsn}
+
+\title[EMNLP]{EMNLP\\ Sequence Tagging II -- Linear Models}
+
+\institute[icst@pku]{
+  Institute of Computer Science and Technology\\
+  Peking University 
+}
+\author[Y Feng]{Yansong Feng  \\ fengyansong@pku.edu.cn}
+
+\frame[t,plain]{ \titlepage } % [t,plain]
+
+%  \begin{itemize}
+%    \item W.  
+%     	 \begin{itemize}
+%   	 	\item \textit{单位} 
+%  	\end{itemize}
+%  \end{itemize}
+%
+%
+%  \begin{example}[A]
+%  \begin{itemize}
+%    \item A
+%  \end{itemize}
+%  \end{example}
+%
+%  \begin{block}{A}
+%  \begin{itemize}
+%    \item A
+%  \end{itemize}
+%  \end{block}
+
+\frame{
+  \frametitle{ Recap: The HMM POS Tagger  }
+  
+   \begin{itemize}
+  \item We represent
+    \begin{itemize}
+    \item  a sentence of any length $n$:   $x_1, x_2, x_3, ...x_n  $ 
+    \item its corresponding POS tag sequence;  $y_1, y_2, y_3, ...y_n  $
+  \end{itemize}
+  
+ \item We care the joint probability of a sentence  and its POS tag sequence:
+  $$p(x_1, x_2, x_3, ...x_n, y_1, y_2, y_3, ...y_n)  $$
+  \red{(Generative Model)}
+  \item Then the most likely POS tag sequence for $x_1, x_2, x_3, ...x_n  $:
+   $$ \arg\max_{y_1... y_n} p(y_1, y_2, y_3, ...y_n)p( x_1, x_2, x_3, ...x_n| y_1, y_2, y_3, ...y_n)$$
+   \item Make Markov Assumptions (e.g., Trigram)
+   $$ \arg\max_{y_1... y_n}   \prod_i p(y_i| y_{i-2}, y_{i-1})\prod_i p(x_i| y_i)$$
+  	\end{itemize}
+  	
+
+}
+
+\frame{
+  \frametitle{ Elements in Our HMM POS Tagger }
+  
+    \begin{itemize}
+    \item Elements
+     	 \begin{itemize}
+   	 	\item a sequence of words
+   	 	\item a sequence of POS tags
+   	 	\item the beginning and end of a sentence 
+  	\end{itemize}
+  	    \item Parameters
+     	 \begin{itemize}
+   	 	\item Sequences of POS tags \only<2->{ \red{$\rightarrow$ transition probabilities ( $p(y_n|y_{n-2}, y_{n-1})$) }}
+   	 	\item Co-occurrences of words and POS tags \only<2->{ \red{ $\rightarrow$ emission probabilities ($p(x_n|y_n)$)}}
+  	\end{itemize}
+  \end{itemize}
+ \only<3->{
+  \brown{Anything else useful?}
+    \begin{itemize}
+    \item if the current word ending with \textit{ing, ed, se, ly, ical}, or ....
+    \item if the previous word is \textit{the}
+    \item if the next word is \textit{.}
+    \item ...
+  \end{itemize}
+  }
+}
+
+\frame{
+  \frametitle{A Naive Way to Incorporate}
+  ...... many $p_{ML}$s
+  \begin{itemize}
+    \item   $p_{ML}(POS_{w_i }=\mbox{VB}|w_i \mbox{ ending with \textit{ing}})$
+    \item   $p_{ML}(POS_{w_i }=\mbox{VB}|w_i  \mbox{ ending with \textit{ed}})$
+    \item   $p_{ML}(POS_{w_i }=\mbox{VB}|w_i  \mbox{ ending with \textit{se}})$
+    \item   $p_{ML}(POS_{w_i }=\mbox{VB}|w_i \mbox{ ending with \textit{ly}})$
+    \item   $p_{ML}(POS_{w_i }=\mbox{VB}w_i  \mbox{ ending with \textit{ical}})$
+    \item   $p_{ML}(POS_{w_i }=\mbox{VB}w_{i-1} = \mbox{  \textit{the}})$
+    \item $p_{ML}(POS_{w_i }=\mbox{VB}w_{i+1} = \mbox{ . (a period)})$
+    \item ...
+  \end{itemize}
+  
+  \only<2-> {
+\red{This gives you lots of $\lambda$s to tune. }
+}
+
+}
+
+\frame{
+  \frametitle{Another View: Features}
+  \red{\textbf{Features}}: pieces of evidences describing some aspects of observed data $x$, usually with respect to the predicted label $y$   
+  \begin{itemize}
+    \item  \blue{computer vision} 
+         	 \begin{itemize}
+   	 	\item the shape, color, texture, size.....of an object
+   	 	\item other objects nearby, relative postions
+   	 	\item number of objects available
+   	 	\item ... 
+  	\end{itemize}
+  \item \blue{natural language process}, e.g., POS tagging
+     	 \begin{itemize}
+   	 	\item the target word itself, prefix, suffix, capital or not, ...
+   	 	\item context: words before/after the target, their morphology
+   	 	\item number of those indications  
+  	\end{itemize}
+  \end{itemize}
+
+
+}
+
+\frame{
+  \frametitle{ Features in NLP}
+    \red{\textbf{Features in NLP}}: pieces of evidences describing some aspects of observed data $x$ with respect to the predicted label $y$, usually with the purpose of providing a conditional probability $p(y|x)$   \only<2->{$\rightarrow \red{\mbox{discriminative models}}$}
+   
+   \only<3->{  
+  \begin{block}{Often}
+  \begin{itemize}
+    \item A feature is a function  $f_i(x, y)\in \mathcal{R}$ 
+    \item more often , it is a binary or indicator function
+    \item for example, 
+    \begin{eqnarray}\nonumber
+    f_i(x, y ) = 
+    \begin{cases}
+    1 & \mbox{if  } x= \mbox{Beijing  and  }y\mbox{=NNP}\\
+    0 & \mbox{otherwise}
+    \end{cases}
+    \end{eqnarray} 
+    \only<4->{
+    \item if we have $m$ aspects to describe an instance, i.e., $m$ features:
+        \begin{itemize}
+   	 	\item \red{\textbf{a feature vector}} for each instance, $(x, y)$
+   	 	\item $ [ f_1(x, y ) , f_2(x, y ) , f_3(x, y ) , ..., f_m(x, y ) ] $
+   	 	\item $[ 1, 0, 0, ...., 1, 0]$
+  	\end{itemize}
+  	}
+  \end{itemize}
+  \end{block}
+  }
+
+
+  %  \begin{block}{A}
+%  \begin{itemize}
+%    \item A
+%  \end{itemize}
+%  \end{block}
+}
+
+
+
+
+\frame{
+  \frametitle{ Features based Linear Models}
+  Linear classifiers with the form like, $\lambda_i f_i(x,y)$ 
+    \begin{itemize}
+    \item need a linear function to map $f_i(x, y)$ to lable $y$
+    \item possibly need a weight $\lambda_i$ for each feature $f_i(x,y)$
+    \item then, for each possible label $y$ of instance $x$, we can compute a score:
+    $$score(x,y) = \sum_i \lambda_i f_i(x,y)$$
+    \item the classifier should choose $y^*$:
+    $$y^* = \arg\max_y \sum_i \lambda_i f_i(x,y)$$
+  \end{itemize}
+
+}
+
+\frame{
+  \frametitle{ Features based Linear Models: An Example}
+
+Tagging \textit{\blue{Beijing}} with a trained model:
+\begin{center} I love \underline{\blue{Beijing}} . \end{center}
+  
+    \begin{itemize}
+    \item aspects: the target word, previous words, suffix, prefix, capitalized, ...
+    \item curwd\_Beijing\_NNP, pre1word\_love\_NNP, pref\_Be\_NNP, cap\_1\_NNP,  curwd\_Beijing\_VB, pref\_Be\_VB...
+    \item for each possible labels (NNP, VB, DT, ...), coupled aspects with lables   
+    \item obtain $\lambda$s using some algorithm, $\lambda_{curwd\_Beijing\_NNP}=10$, $\lambda_{pref\_Be\_NNP}=5$, $\lambda_{cap\_1\_DT}=-10$, ...
+    \item compute score(Beijing, NNP),  score(Beijing, VB), score(Beijing, DT), ...
+    \item choose the largest one: score(Beijing, NNP)
+    \item tag \textit{\blue{Beijing}} with \blue{NNP}
+  \end{itemize}
+
+}
+
+\frame{
+  \frametitle{ Features based Linear Models: Algorithms}
+
+The key is to choose proper weights \red{$\lambda$s} for features 
+
+    \begin{itemize}
+    \item \only<1>{the Perceptron algorithm}\only<2->{\red{the Perceptron algorithm}(covered in this lecture)}
+    \item Margin-based models (the Support Vector Machines, SVM)
+    \item Exponential Models:
+        \begin{itemize}
+   	 	\item log-linear models, maximum entropy models, logistic models, ...
+   	 	\item basically, produce a probabilistic model according to  score$(x,y)$
+   	 	$$p(y|x)= \frac{\exp score(x,y)}{\sum_{y'}\exp score(x, y')} =  \frac{\exp \sum_i \lambda_i f_i(x,y)}{\sum_{y'}\exp \sum_i \lambda_i f_i(x,y')}$$
+   	 	\item numerator: positive score for label $y$
+   	 	\item denominator: normalization
+   	 	\only<3->{
+   	 	\item \brown{a powerful tool!}  (covered in later lectures)
+   	 	  	 	}
+   	 \end{itemize}	
+  \end{itemize}
+
+}
+
+\frame{
+  \frametitle{The Perceptron Algorithm}
+    \begin{itemize}
+    \item Classic: Rosenblatt 1958
+    \item Modern: Freund and Schapire 1999
+         \begin{itemize}
+    		\item proof for convergence
+    		\item very competitive performances in classifications
+ 	 \end{itemize}
+     \item NLP:  Michael Collins 2002, 2004, .....
+         \begin{itemize}
+    		\item modificatioins with respect to NLP applications
+    		\item serves as alternative parameter estimation methods for many ML models
+    		\item \red{You SHOULD read at least the 2002 paper}
+ 	 \end{itemize}
+         	 
+  \end{itemize}
+  
+}
+
+\frame{
+  \frametitle{A Variant of The Perceptron Algorithm}
+
+    \begin{itemize}
+    \item \textbf{Inputs}: 
+     	 \begin{itemize}
+   	 	\item Training set  $(x_k, y_k)$ for  $k = 1, 2, ..., n$
+   	 	\item $x_k$ the data, and $y_k$ the label
+  	\end{itemize}
+    \item Initialization:
+     	 \begin{itemize}
+   	 	\item $ \lambda = [0,0,0.....]$, $T$ 
+  	\end{itemize}
+   \item Define:
+     	 \begin{itemize}
+   	 	\item follow Collins: \red{GEN} enumerates possible candidate lable $y$s for data $x$  
+   	 	\item $z = \arg \max_{y\in GEN(x)} \sum_i \lambda_i f_i(x, y)$ 
+   	 	
+  	\end{itemize}
+    \item Loop: 
+     	 \begin{itemize}
+   	 	\item For $t=1, 2, 3...,T$, $k= 1, 2, 3,..., n$\\
+   	 	  compute $z_k = \arg \max_{y\in GEN(x_k)} \sum_i \lambda_i f_i(x_k, y)$ \only<2->{\red{(Key: decode $z$)}}\\
+   	 	 update $\lambda$s 
+   	 	 \begin{itemize}
+   	 		\item \red{if $z_k\neq y_k$:  $\lambda = \lambda + f(x_k, y_k) - f(x_k, z_k)$}
+  		\end{itemize}
+   	 	   
+  	\end{itemize}
+    \item Output:
+     	 \begin{itemize}
+   	 	\item $\lambda$s
+  	\end{itemize}
+  \end{itemize}
+  
+}
+
+
+\frame{
+  \frametitle{ Structured Perceptron for POS Tagging (A simple case) }
+     \textbf{training data:}  \textit{China/}\red{N}  \textit{Mobile/}\red{N} \textit{is/}\brown{V}  \textit{a}/\green{DT} \textit{communication}/\red{N} \textit{giant}/\red{N} \textit{in}/\blue{P} \textit{east/}\cyan{ADJ} \textit{Asia}/\red{N}
+    \begin{itemize}
+
+    \item in a step during training:\\ \textit{China/}\red{N}  \textit{Mobile/}\red{N} ...  \textit{communication}/\red{N} \textit{giant}/\textbf{??} \textit{in east Asia}
+     	 \begin{itemize}
+   	 	\item word \textit{giant} may have many choices of tags : \textbf{N, V, DT, P, ADJ, ...}
+   	 	\only<2->{
+   	 	\item for each choice, .e.g, N, we extract $m$ features :
+   	 	  \begin{itemize}
+    			\item $f_1(x,y) = 1$ if current word is \textit{giant} and $y=N$. $\rightarrow$  $f_1(x,y) = 1$ 
+    			\item $f_{11}(x,y) = 1$ if current word is \textit{giant} and $y=ADJ$. $\rightarrow$  $f_{11}(x,y) = 0$ 
+    			\item $f_2(x,y) = 1$ if previous word is \textit{the} and $y=N$. $\rightarrow$  $f_2(x,y) = 0$
+    			\item $f_{22}(x,y) = 1$ if previous word is \textit{the} and $y=ADJ$. $\rightarrow$  $f_{22}(x,y) = 0$
+    			\item $f_3(x,y) = 1$ if sufix of current word is \textit{ant} and $y=N$. $\rightarrow$  $f_3(x,y) = 1$
+    			\item $f_{33}(x,y) = 1$ if sufix of current word is \textit{ant} and $y=ADJ$. $\rightarrow$  $f_{33}(x,y) = 0$
+    			
+    			\item ...
+ 		 \end{itemize}
+ 		 
+ 		 \item  compute score$(giant, N)= \sum_i \lambda_i f_i(giant, N)$, score$(giant, ADJ)$, ... 
+ 		 \item choose the largest score$(giant, y)$ , e.g., ADJ 
+ 		 }
+  	\end{itemize}
+  	\only<3->{
+  	\item we can tag the whole sentence
+  	}
+
+  \end{itemize}
+
+}
+
+
+\frame{
+  \frametitle{Structured Perceptron for POS Tagging (A simple case)}
+    \begin{itemize}
+ 	 \item the resulting sequence is \\
+  	\textit{China/}\red{N}  \textit{Mobile/}\red{N} \textit{is/}\brown{V}  \textit{a}/\green{DT} \textit{communication}/\red{N} \only<1>{\textit{giant}/\cyan{ADJ} \textit{in}/\blue{DT}}\only<2->{\underline{\textit{giant}/\cyan{ADJ} \textit{in}/\blue{DT}}} \textit{east/}\cyan{ADJ} \textit{Asia}/\red{N}
+	  \item the gold-standard one \\
+  	  \textit{China/}\red{N}  \textit{Mobile/}\red{N} \textit{is/}\brown{V}  \textit{a}/\green{DT} \textit{communication}/\red{N} \textit{giant}/\red{N} \textit{in}/\blue{P} \textit{east/}\cyan{ADJ} \textit{Asia}/\red{N}
+  	  \only<2->{
+  	  \item we compare them, and find the differences:}
+  	  \only<3->{
+  	  \item  if necessary, we \textbf{update} the features related to the correct/wrong predictions
+  	       	 \begin{itemize}
+   	 		\item $\lambda_{f_1(x,y )}^* = \lambda_{f_1(x,y )} + 1 $
+   	 		\item $\lambda_{f_3(x,y )}^* = \lambda_{f_3(x,y ) }+ 1 $
+   	 		 \item $\lambda_{f_{11}(x,y )}^* =\lambda_{ f_{11}(x,y )} - 1 $
+   	 		\item $\lambda_{f_{33}(x,y) }^*= \lambda_{f_{33}(x,y ) }- 1 $
+   	 		\item ...
+  		\end{itemize}
+  	 
+  	  }
+  	  
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{ A Bit Complex }
+     If we want to include features like
+    \begin{itemize}
+		\item $f_{100}(x,y) = 1$ if previous tag is \textit{N} and $y=N$. $\rightarrow$  $f_100(giant, N) = 1$ 
+    		\item $f_{101}(x,y) = 1$ if  the previous two tags are \textit{DT\_N} and $y=N$. $\rightarrow$  $f_{101}(giant, N) = 1$
+    		\item ...
+ 		 
+ 		 \item  we can not directly compute score$(giant, N)$, score$(giant, ADJ)$, ... 
+ 		 \only<2->{
+ 		 
+ 		 \item we need to decode the best tag sequence for the whole sentence using \red{Dynamic Programming}\\
+ 		  \only<3->{ $\rightarrow$  \red{\textbf{the Viterbi Algorithm}}
+ 		  \item $$\arg\max_{y\in GEN(x)} \sum_{w\in x}\sum_i \lambda_i f_i(\mbox{history}(w), y)$$
+ 		  }
+ 		 }
+  \end{itemize}
+
+}
+
+\frame{
+  \frametitle{Decoding: the Viterbi Algorithm}
+    \begin{itemize}
+    \item for sentence of length $n$
+    \item define the score of tag sequence $t_1, t_2, ...t_j$: \\
+    score$(t_1, t_2, ...t_j) = \sum_{w\in x}\sum_i \lambda_i f'_i(w, t_{w-2}, t_{w-1}, t_w) $ 
+    \item define the dynamic programming table\\
+    $\pi(j, u, v)$ = maximum probability of a tag sequence ending with tags $u, v$ at position $j$
+    
+    \item so, $$ \pi(j, u, v) = \max_{<t_1, t_2, ...t_{j-2}>} \mbox{score}(t_1, t_2, ...t_{j-2}, u, v) $$
+    \item Recursively: \\
+    base with $\pi(0, \mbox{START}, \mbox{START}) = 0$\\
+    for any $j\in {1, 2,...,n }$, for possible $u$ and $v$:
+    $$ \pi(j, u, v) = \max_{t}(\pi(j-1, t, u ) +  \sum_i \lambda_i f'_i(word_v, t, u, v) )  $$
+    \item the Viterbi Algorithm with Backpointers $\rightarrow$ the optimal sequence!
+  \end{itemize}
+
+}
+
+
+\frame{
+  \frametitle{ More about Perceptron}
+    \begin{itemize}
+    \item Voted Perceptron (Collins 2002)
+    \item Averaged Perceptron (Collins 2002)
+    \item Early Update (Collins and Roak 2004)
+  \end{itemize}
+  
+  Questions
+      \begin{itemize}
+    \item can this model take features like: \\
+    how many times we see a verb in this sentence ?
+  \end{itemize}
+}
+
+
+
+
+
+\frame{
+  \frametitle{ Readings  }
+  
+  \begin{itemize}
+  \item [Freund and Schapire 1999] Large Margin Classification using the Perceptron Algorithm, Machine Learning, 1999
+  \item [Collins 2002]
+Discriminative Training Methods for Hidden Markov Models: Theory and Experiments with Perceptron Algorithms.  Michael Collins, EMNLP, 2002
+  \end{itemize}
+
+
+}
+
+\end{CJK}
+\end{document}

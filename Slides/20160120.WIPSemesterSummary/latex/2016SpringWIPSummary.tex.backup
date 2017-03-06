@@ -85,7 +85,7 @@
 
 
 \begin{frame}{助教}
- \begin{block}
+ \begin{block}{}
   2015级工学院计算概论
  \end{block}
 
@@ -107,21 +107,72 @@
  \begin{block}{大组会}
   \begin{itemize}
    \item EMNLP 2015 的一篇做不同知识库的合并工作的文章
+   \only<1>{
     \begin{itemize}
      \item Knowledge Base Unification via Sense Embeddings and Disambiguation
      \item 合并实体、合并谓词
     \end{itemize}
-
+    }
+   \item 目前工作：中文知识库构建
+   \only<1>{
+    \begin{itemize}
+     \item 构建自己的\begin{color}{blue}类别\end{color}和\begin{color}{red}谓词\end{color}集合
+    \end{itemize}
+    }
   \end{itemize}
-
  \end{block}
+
+ 
+ \only<2-3>{
+ \begin{block}{小组会}
+  \begin{itemize}
+   \item 介绍了几个自己在用的工具/软件和一篇利用关联规则查找spo中的相同谓词
+   \only<2>{
+    \begin{itemize}
+     \item Synonym Analysis for Predicate Expansion
+    \end{itemize}
+    }
+   \item 利用RNN提取文本中的关系向量，和KB结合，训练更好的实体向量、关系向量
+   \only<2>{
+      \begin{itemize}
+       \item EMNLP 2015: Representing Text for Joint Embedding of Text and Knowledge Bases
+      \end{itemize}
+      }
+  \end{itemize}
+ \end{block}
+ }
+\end{frame}
+
+\begin{frame}{实验室新主页}
+\begin{columns}
+ \column{0.5\hsize}
+ \begin{itemize}\small
+  \item 首页：中英文 (感谢贺文强、罗炳峰)
+  \only<2->{\item 新闻：markdown -> html}
+  \only<3->{\item 团队：老师的详细信息+学生的基本信息}
+ \end{itemize}
+ \vspace{1cm}
+ \only<2->{\centering\includegraphics[width=0.5\hsize]{pic/wip-news.png}}
+ 
+ \column{0.15\hsize}
+ \centering\includegraphics[height=0.7\textheight]{pic/wip-homepage15.png}
+ \column{0.3\hsize}
+ \only<3->{\centering\includegraphics[height=0.7\textheight]{pic/wip-team.png}}
+\end{columns}
+\end{frame}
+
+\begin{frame}{结构化知识库构建}
+ \begin{itemize}
+  \item 之前大组会做过短报告，目前已经形成了基本的类别体系，谓词体系待完成
+  \item 
+ \end{itemize}
 
 \end{frame}
 
 
 \begin{frame}{Introduction}
 
-\animategraphics[loop,height=0.5\textheight]{2}{pic/ontology-}{0}{56}
+% \animategraphics[loop,height=0.5\textheight]{2}{pic/ontology-}{0}{56}
 \end{frame}
 
 \end{document} 
